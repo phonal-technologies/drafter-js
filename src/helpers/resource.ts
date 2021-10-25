@@ -6,7 +6,7 @@ export const makeResource =
   ({ fetch, url, headers }: ResourceParams) =>
   (name: string) => {
     return {
-      find(query: object) {
+      find(query: object = {}) {
         const _url = new URL(`${url}/${name}`)
 
         Object.entries(query).forEach(([key, value]) =>
