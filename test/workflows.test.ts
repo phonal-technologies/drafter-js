@@ -4,14 +4,12 @@ import { FetchParams } from '../src/types/requests'
 const APIKEY = 'pro_Vs1Ou0Le.fX1F5KlLvqeZvweLhot6lXEE'
 const ORGANIZATION = 'phonal.drafter.ai'
 const XUSTOMKEY = 'xcustomkey'
-const fetch =
-  (r: object = {}) =>
-  (url: string, p: FetchParams) => {
-    console.log('fetch params', url, p)
-    return Promise.resolve({
-      json: () => Promise.resolve(r),
-    })
-  }
+const fetch = (r: object = {}) => (url: string, p: FetchParams) => {
+  console.log('fetch params', url, p)
+  return Promise.resolve({
+    json: () => Promise.resolve(r),
+  })
+}
 
 describe('workflows', () => {
   let drafterApi: any
