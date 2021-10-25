@@ -1,14 +1,17 @@
 import { initialize } from '../src'
 import { FetchParams } from '../src/types/requests'
 
-const APIKEY = 'apikey'
+const APIKEY = 'pro_Vs1Ou0Le.fX1F5KlLvqeZvweLhot6lXEE'
+const ORGANIZATION = 'phonal.drafter.ai'
 const XUSTOMKEY = 'xcustomkey'
-const fetch = (r: object = {}) => (url: string, p: FetchParams) => {
-  console.log('fetch params', url, p)
-  return Promise.resolve({
-    json: () => Promise.resolve(r),
-  })
-}
+const fetch =
+  (r: object = {}) =>
+  (url: string, p: FetchParams) => {
+    console.log('fetch params', url, p)
+    return Promise.resolve({
+      json: () => Promise.resolve(r),
+    })
+  }
 
 describe('workflows', () => {
   let drafterApi: any
@@ -18,7 +21,7 @@ describe('workflows', () => {
   })
 
   it('should be initialized', () => {
-    drafterApi = initialize(APIKEY, {
+    drafterApi = initialize(APIKEY, ORGANIZATION, {
       fetch: fetch(),
       url: 'http://localhost:3030',
       headers: {
@@ -39,7 +42,7 @@ describe('workflows', () => {
 
   it('should find workflows', async () => {
     const MOCKED = { data: [], offset: 0, limit: 10, total: 0 }
-    drafterApi = initialize(APIKEY, {
+    drafterApi = initialize(APIKEY, ORGANIZATION, {
       fetch: fetch(MOCKED),
     })
 
@@ -49,7 +52,7 @@ describe('workflows', () => {
 
   it('should create a workflow', async () => {
     const MOCKED = { name: 'Test', description: 'Test' }
-    drafterApi = initialize(APIKEY, {
+    drafterApi = initialize(APIKEY, ORGANIZATION, {
       fetch: fetch(MOCKED),
     })
 
