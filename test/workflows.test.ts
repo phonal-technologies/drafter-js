@@ -3,14 +3,12 @@ import { FetchParams } from '../src/types/requests'
 
 const APIKEY = 'apikey'
 const XUSTOMKEY = 'xcustomkey'
-const fetch =
-  (r: object = {}) =>
-  (url: string, p: FetchParams) => {
-    console.log('fetch params', url, p)
-    return Promise.resolve({
-      json: () => Promise.resolve(r),
-    })
-  }
+const fetch = (r: object = {}) => (url: string, p: FetchParams) => {
+  console.log('fetch params', url, p)
+  return Promise.resolve({
+    json: () => Promise.resolve(r),
+  })
+}
 
 describe('workflows', () => {
   let drafterApi: any
