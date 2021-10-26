@@ -4,7 +4,7 @@ Javascript SDK for Drafter AI
 
 ```js
 import fetch from 'node-fetch'
-import { initialize } from 'drafter-js'
+import { initialize } from '@phonal-technologies/drafterai-js'
 
 // Init an API with apikey and fetch provider
 const drafterApi = initialize(
