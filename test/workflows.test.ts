@@ -18,7 +18,7 @@ describe('workflows', () => {
     drafterApi = null
   })
 
-  it('should be initialized', () => {
+  it('should be initialized and have workflow resource', () => {
     drafterApi = initialize(APIKEY, ORGANIZATION, {
       fetch: fetch(),
       url: 'http://localhost:3030',
