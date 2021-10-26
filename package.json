@@ -15,12 +15,12 @@
     "src"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=15"
   },
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test",
+    "test": "tsdx test  --no-cache",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",
@@ -54,6 +54,7 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^6.0.3",
     "husky": "^7.0.4",
+    "rollup-plugin-analyzer": "^4.0.0",
     "size-limit": "^6.0.3",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",

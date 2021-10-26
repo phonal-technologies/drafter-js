@@ -1,8 +1,3 @@
-# drafter-js
-
-Javascript SDK for Drafter AI
-
-```js
 import fetch from 'node-fetch'
 import { initialize } from 'drafter-js'
 
@@ -28,4 +23,3 @@ const main = async () => {
 }
 
 main()
-```
