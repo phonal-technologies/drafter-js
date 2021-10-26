@@ -38,7 +38,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "drafter-js",
+  "name": "@phonal-technologies/drafterai-js",
   "author": "Dmitry Tuzenkov",
   "module": "dist/drafter-js.esm.js",
   "size-limit": [
