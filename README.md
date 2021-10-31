@@ -1,5 +1,8 @@
 # drafterai-js
-[![npm version](https://img.shields.io/badge/npm%20version-v0.1.1-red?style=flat-square)](https://www.npmjs.com/package/@phonal-technologies/drafterai-js)
+
+[![npm (scoped)](https://img.shields.io/npm/v/@phonal-technologies/drafterai-js)](https://www.npmjs.com/package/@phonal-technologies/drafterai-js)
+[![npm](https://img.shields.io/npm/dy/@phonal-technologies/drafterai-js)](https://www.npmjs.com/package/@phonal-technologies/drafterai-js)
+[![license](https://img.shields.io/github/license/phonal-technologies/drafter-js)](https://www.npmjs.com/package/@phonal-technologies/drafterai-js)
 
 Javascript SDK for Drafter AI
 
