@@ -23,7 +23,7 @@
     "test": "tsdx test  --no-cache",
     "lint": "tsdx lint",
     "optimize": "rm **/*.map **/*development.js",
-    "prepare": "npm run build && npm run optimize",
+    "prepare": "npm run build",
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
