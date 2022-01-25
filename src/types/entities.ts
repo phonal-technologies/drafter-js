@@ -1,7 +1,7 @@
 export interface Entity {
-  id: string
-  createdAt: string
-  updatedAt: string
+  id: string | number
+  createdAt: string | Date
+  updatedAt: string | Date
 }
 
 export interface Entities {

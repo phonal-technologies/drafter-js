@@ -7,11 +7,7 @@ export interface Methods {
   workflowExecutions: object
 }
 
-export const initialize = (
-  apikey: string,
-  organization: string,
-  params: Params
-): Methods => {
+export const initialize = (accessKey: string, params: Params): Methods => {
   const newParams = {
     fetch: () => {
       throw new Error('Fetch function is not provided')
@@ -21,8 +17,7 @@ export const initialize = (
     headers: {
       ...params.headers,
       'Content-Type': 'application/json',
-      'X-Access-Key': apikey,
-      'X-Organization': `https://${organization}`,
+      'X-Access-Key': accessKey,
     },
   }
 

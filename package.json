@@ -42,7 +42,7 @@
   "name": "@phonal-technologies/drafterai-js",
   "author": "Dmitry Tuzenkov",
   "module": "dist/drafter-js.esm.js",
-  "homepage": "https://github.com/phonal-technologies/drafter-js",
+  "homepage": "https://drafter.ai",
   "repository": {
     "type": "git",
     "url": "https://github.com/phonal-technologies/drafter-js.git"

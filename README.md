@@ -7,23 +7,20 @@
 Javascript SDK for Drafter AI
 
 ```js
+// example.js
 import fetch from 'node-fetch'
 import { initialize } from '@phonal-technologies/drafterai-js'
 
 // Init an API with apikey and fetch provider
-const drafterApi = initialize(
-  'your-drafter-access-key', // 'pro_Vs1Ou0Le.fX1F5KlLvqeZvweLhot6lXEE'
-  'your-organization-domain', // 'phonal.drafter.ai'
-  {
-    fetch: fetch,
-  }
-)
+const accessKey = process.env.DRAFTER_ACCESS_KEY
+const drafterApi = initialize(accessKey, { fetch })
 
 /**
  * Example
- * const drafterApi = initialize('pro_Vs1Ou0Le.fX1F5KlLvqeZvweLhot6lXEE', 'phonal.drafter.ai', {
- *  fetch: fetch,
- * })
+ * const drafterApi = initialize(
+ * 'pro_Vs1zz0Le.fX1F5KlLvqeZzzzeLhot6lXEE',
+ * { fetch: fetch, }
+ * )
  */
 
 const main = async () => {
