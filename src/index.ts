@@ -27,3 +27,5 @@ export const initialize = (accessKey: string, params: Params): Methods => {
     workflowExecutions: makeWorkflowExecutions(newParams),
   }
 }
+
+export { WORKFLOW_EXAMPLE, WORKFLOW_EXECUTION_EXAMPLE } from './methods'

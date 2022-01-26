@@ -6,23 +6,16 @@ export const makeResource = ({ fetch, url, headers }: ResourceParams) => (
   name: string
 ) => {
   return {
-    find(query: object = {}) {
+    find(query: object = {}, { all = false } = {}) {
       const _url = new URL(`${url}/${name}`)
 
       Object.entries(query).forEach(([key, value]) =>
         _url.searchParams.append(key, value)
       )
 
-      return makeRequest({
-        fetch,
-        headers,
-        method: 'GET',
-        url: _url.toString(),
-      })
-    },
-
-    get(id: string) {
-      const _url = new URL(`${url}/${name}/${id}`)
+      if (all) {
+        headers = { ...headers, 'x-no-paginate': all }
+      }
 
       return makeRequest({
         fetch,
@@ -41,6 +34,17 @@ export const makeResource = ({ fetch, url, headers }: ResourceParams) => (
         method: 'POST',
         url: _url.toString(),
         body: data,
+      })
+    },
+
+    get(id: string) {
+      const _url = new URL(`${url}/${name}/${id}`)
+
+      return makeRequest({
+        fetch,
+        headers,
+        method: 'GET',
+        url: _url.toString(),
       })
     },
 

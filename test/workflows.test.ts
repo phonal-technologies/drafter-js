@@ -1,7 +1,7 @@
 import { initialize } from '../src'
 import { FetchParams } from '../src/types/requests'
 
-const APIKEY = 'pro_Vs1Ou0Le.fX1F5KlLvqeZvweLhot6lXEE'
+const APIKEY = '__DRAFTER_ACCESS_KEY__'
 const XUSTOMKEY = 'xcustomkey'
 const fetch = (r: object = {}) => (url: string, p: FetchParams) => {
   console.log('fetch params', url, p)
