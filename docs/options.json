@@ -1,0 +1,12 @@
+{
+  "info": {
+    "_description": "Drafter Api Description",
+    "xLogo": {
+      "url": "https://api.drafter.ai/logo.png",
+      "backgroundColor": "",
+      "altText": "Drafter AI"
+    }
+  },
+  "servers": [{ "url": "https://api.drafter.ai" }],
+  "defaultTag": "Common"
+}

@@ -90,7 +90,7 @@ info:
     backgroundColor: ''
     altText: Drafter AI
 servers:
-  - url: http://{{api_url}}
+  - url: https://api.drafter.ai
 components:
   securitySchemes:
     apikeyAuth:
