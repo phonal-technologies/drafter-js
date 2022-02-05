@@ -1,0 +1,1032 @@
+{
+	"info": {
+		"_postman_id": "640f069f-c81e-40a5-a830-824f720d2e9b",
+		"name": "Drafter AI - Public Rest API",
+		"description": "# API Reference\n\nThe Drafter API is organized around [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer). Our API has predictable resource-oriented URLs, accepts [form-encoded](https://en.wikipedia.org/wiki/POST_(HTTP)#Use_for_submitting_web_forms) request bodies, returns [JSON-encoded](http://www.json.org/) responses, and uses standard HTTP response codes, authentication, and verbs.\n\nYou can use the Stripe API in test mode, which does not affect your live data or interact with the banking networks. The API key you use to authenticate the request determines whether the request is live mode or test mode.\n\n# Authentication\n\nThe Stripe API uses [API keys](https://stripe.com/docs/keys) to authenticate requests. You can view and manage your API keys in the [Drafter AI Setting > Access Key Management](https://app.drafter.ai/settings).\n\nTest mode secret keys have the prefix `test_` and live mode secret keys have the prefix `prod_`.\n\nYour API keys carry many privileges, so be sure to keep them secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth.\n\nAuthentication to the API is performed via [HTTP Basic Auth](http://en.wikipedia.org/wiki/Basic_access_authentication). Provide your API key as the basic auth username value. You do not need to provide a password.\n\nIf you need to authenticate via bearer auth (e.g., for a cross-origin request), use `-H \"X-Access-Key: test_4eC39HqL/1.yjWDarjtT1zdp7dc\"`\n\nAll API requests must be made over [HTTPS](http://en.wikipedia.org/wiki/HTTP_Secure). Calls made over plain HTTP will fail. API requests without authentication will also fail.\n\n# Javascript SDK example\n\n``` javascript\n// example.js\nimport fetch from 'node-fetch'\nimport {\n  initialize,\n  WORKFLOW_EXAMPLE,\n  WORKFLOW_EXECUTION_EXAMPLE,\n} from '@phonal-technologies/drafterai-js'\n// Init an API with apikey and fetch provider\nconst accessKey = process.env.DRAFTER_ACCESS_KEY\nconst drafterApi = initialize(accessKey, { fetch })\n\n```\n\nTo get more information about SDK check public resources:\n\n*   NPM package [@phonal-technologies/drafterai-js](https://www.npmjs.com/package/@phonal-technologies/drafterai-js)\n*   Github repo [phonal-technologies/drafter-js](https://github.com/phonal-technologies/drafter-js)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Workflows",
+			"item": [
+				{
+					"name": "Get workflows list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/workflows",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"workflows"
+							]
+						},
+						"description": "``` javascript\nimport fetch from 'node-fetch'\nimport {\n  initialize,\n  WORKFLOW_EXAMPLE,\n  WORKFLOW_EXECUTION_EXAMPLE,\n} from '@phonal-technologies/drafterai-js'\n// Init an API with apikey and fetch provider\nconst accessKey = process.env.DRAFTER_ACCESS_KEY\nconst drafterApi = initialize(accessKey, {\n  fetch,\n})\n;(async () => {\n  console.log('WORKFLOW_EXAMPLE', WORKFLOW_EXAMPLE)\n  const workflows = await drafterApi.workflows.find(\n    { $limit: 10, '$sort[id]': -1 },\n    { all: true }\n  )\n\n  console.log('First 10 workflows', workflows)\n})\n\n```"
+					},
+					"response": [
+						{
+							"name": "Get workflows list",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/workflows",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"workflows"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Allow",
+									"value": "GET,POST,PATCH,PUT,DELETE"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1502-MKYj1drlsr6dp3V50cJT5lFy+v4\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Feb 2022 10:30:58 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 6,\n    \"limit\": 10,\n    \"skip\": 0,\n    \"data\": [\n        {\n            \"id\": 110,\n            \"organizationId\": 1,\n            \"userId\": 112,\n            \"name\": \"Write a Product Pitch Workflow\",\n            \"status\": \"published\",\n            \"description\": \"Write a Product Pitch Workflow\",\n            \"iconUrl\": \"https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflows/110/icon_75573f9e-94e5-41cd-a568-78e6cb08e660.png\",\n            \"firstStepId\": null,\n            \"createdAt\": \"2021-12-09T11:27:48.562Z\",\n            \"updatedAt\": \"2022-01-25T12:16:30.586Z\",\n            \"steps\": [\n                {\n                    \"id\": 590,\n                    \"datasourceId\": null,\n                    \"nextId\": 621,\n                    \"name\": \"Form / Manual\",\n                    \"action\": \"src=form_manual\",\n                    \"type\": \"source\"\n                },\n                {\n                    \"id\": 621,\n                    \"datasourceId\": null,\n                    \"nextId\": null,\n                    \"name\": \"Define Hashtags\",\n                    \"action\": \"cmd=generate_text;ver=1.0.0;type=text%2Fhashtags\",\n                    \"type\": \"action\"\n                }\n            ],\n            \"datasources\": []\n        },\n        {\n            \"id\": 119,\n            \"organizationId\": 1,\n            \"userId\": 1,\n            \"name\": \"TEST WORKFLOWDWDW\",\n            \"status\": \"published\",\n            \"description\": \"d2d2de\",\n            \"iconUrl\": \"https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflows/119/icon_default_workflow_sm_icon.png\",\n            \"firstStepId\": null,\n            \"createdAt\": \"2022-01-31T10:01:03.396Z\",\n            \"updatedAt\": \"2022-02-02T19:22:31.455Z\",\n            \"steps\": [\n                {\n                    \"id\": 638,\n                    \"datasourceId\": 44,\n                    \"nextId\": 639,\n                    \"name\": \"Form / Manual\",\n                    \"action\": \"src=form_manual\",\n                    \"type\": \"source\"\n                },\n                {\n                    \"id\": 639,\n                    \"datasourceId\": null,\n                    \"nextId\": null,\n                    \"name\": \"Get URL Data\",\n                    \"action\": \"cmd=scrape_url_data;ver=1.0.0\",\n                    \"type\": \"action\"\n                }\n            ],\n            \"datasources\": [\n                {\n                    \"id\": 44,\n                    \"type\": \"manual\",\n                    \"url\": null,\n                    \"attributes\": {\n                        \"websiteUrl\": \"url\"\n                    }\n                }\n            ]\n        },\n        {\n            \"id\": 113,\n            \"organizationId\": 1,\n            \"userId\": 3,\n            \"name\": \"New v15\",\n            \"status\": \"published\",\n            \"description\": \"Test v15\",\n            \"iconUrl\": \"https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflows/113/icon_4a809379-bf60-44df-9267-25be5ffe4e3c.png\",\n            \"firstStepId\": null,\n            \"createdAt\": \"2022-01-11T19:40:20.705Z\",\n            \"updatedAt\": \"2022-01-25T12:16:16.371Z\",\n            \"steps\": [\n                {\n                    \"id\": 566,\n                    \"datasourceId\": 22,\n                    \"nextId\": 551,\n                    \"name\": \"Dataset\",\n                    \"action\": \"src=csv_ds\",\n                    \"type\": \"source\"\n                },\n                {\n                    \"id\": 551,\n                    \"datasourceId\": null,\n                    \"nextId\": 552,\n                    \"name\": \"Get URL Data\",\n                    \"action\": \"cmd=scrape_url_data;ver=1.0.0\",\n                    \"type\": \"action\"\n                },\n                {\n                    \"id\": 552,\n                    \"datasourceId\": null,\n                    \"nextId\": null,\n                    \"name\": \"Write a Product Pitch\",\n                    \"action\": \"cmd=generate_text;ver=1.0.0;type=ads%2Fpitch_s\",\n                    \"type\": \"action\"\n                }\n            ],\n            \"datasources\": [\n                {\n                    \"id\": 22,\n                    \"type\": \"csv_ds\",\n                    \"url\": \"https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflow-datasources/22/dsrc_10456217-1d65-4099-b943-e58f2e2f548a.csv\",\n                    \"attributes\": {\n                        \"websiteUrl\": \"url\"\n                    }\n                }\n            ]\n        },\n        {\n            \"id\": 115,\n            \"organizationId\": 1,\n            \"userId\": 3,\n            \"name\": \"🛒 eCommerce Dataset Enrichment\",\n            \"status\": \"draft\",\n            \"description\": \"To demonstrate dataset possibilities for eCommerce\",\n            \"iconUrl\": \"https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflows/115/icon_5fe32864-91f7-4ae3-968a-745f7ee03c56.png\",\n            \"firstStepId\": null,\n            \"createdAt\": \"2022-01-24T13:08:56.321Z\",\n            \"updatedAt\": \"2022-01-25T12:15:49.367Z\",\n            \"steps\": [\n                {\n                    \"id\": 622,\n                    \"datasourceId\": null,\n                    \"nextId\": 623,\n                    \"name\": \"Convert a product title into description for eCommerce\",\n                    \"action\": \"cmd=generate_text;ver=1.0.0;type=ecomm%2Fproduct\",\n                    \"type\": \"action\"\n                },\n                {\n                    \"id\": 623,\n                    \"datasourceId\": null,\n                    \"nextId\": null,\n                    \"name\": \"Define eCommerce Categories\",\n                    \"action\": \"cmd=generate_text;ver=1.0.0;type=ecomm%2Fcategory\",\n                    \"type\": \"action\"\n                },\n                {\n                    \"id\": 588,\n                    \"datasourceId\": 26,\n                    \"nextId\": 622,\n                    \"name\": \"🛒 List of Products x5\",\n                    \"action\": \"src=csv_ds\",\n                    \"type\": \"source\"\n                }\n            ],\n            \"datasources\": [\n                {\n                    \"id\": 26,\n                    \"type\": \"csv_ds\",\n                    \"url\": \"https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflow-datasources/26/dsrc_c20dc0b6-a9bf-4eaa-891d-a9433fd7b3d3.csv\",\n                    \"attributes\": {\n                        \"productName\": \"string\"\n                    }\n                }\n            ]\n        },\n        {\n            \"id\": 114,\n            \"organizationId\": 1,\n            \"userId\": 1,\n            \"name\": \"Dataset Workflow\",\n            \"status\": \"draft\",\n            \"description\": \"Sample\",\n            \"iconUrl\": \"https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflows/114/icon_2eddd70e-f372-4546-a12e-6223067fc740.png\",\n            \"firstStepId\": null,\n            \"createdAt\": \"2022-01-18T19:45:08.596Z\",\n            \"updatedAt\": \"2022-01-25T12:16:01.877Z\",\n            \"steps\": [\n                {\n                    \"id\": 570,\n                    \"datasourceId\": 24,\n                    \"nextId\": 571,\n                    \"name\": \"Dataset\",\n                    \"action\": \"src=csv_ds\",\n                    \"type\": \"source\"\n                },\n                {\n                    \"id\": 571,\n                    \"datasourceId\": null,\n                    \"nextId\": 572,\n                    \"name\": \"Get URL Data\",\n                    \"action\": \"cmd=scrape_url_data;ver=1.0.0\",\n                    \"type\": \"action\"\n                },\n                {\n                    \"id\": 572,\n                    \"datasourceId\": null,\n                    \"nextId\": null,\n                    \"name\": \"Compose Tweet\",\n                    \"action\": \"cmd=generate_text;ver=1.0.0;type=twitter%2Ftweet\",\n                    \"type\": \"action\"\n                }\n            ],\n            \"datasources\": [\n                {\n                    \"id\": 24,\n                    \"type\": \"csv_ds\",\n                    \"url\": \"https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflow-datasources/24/dsrc_aa59ca97-595d-421e-90e0-c78a2f021d99.csv\",\n                    \"attributes\": {\n                        \"URL\": \"url\",\n                        \"Language\": \"string\",\n                        \"Country\": \"string\"\n                    }\n                }\n            ]\n        },\n        {\n            \"id\": 116,\n            \"organizationId\": 1,\n            \"userId\": 3,\n            \"name\": \"Dataset Test x2\",\n            \"status\": \"draft\",\n            \"description\": \"Test\",\n            \"iconUrl\": \"https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflows/116/icon_2d0f2286-f340-4ae1-be82-ccd34149804a.png\",\n            \"firstStepId\": null,\n            \"createdAt\": \"2022-01-25T10:57:03.700Z\",\n            \"updatedAt\": \"2022-01-25T10:57:03.700Z\",\n            \"steps\": [\n                {\n                    \"id\": 645,\n                    \"datasourceId\": 47,\n                    \"nextId\": 646,\n                    \"name\": \"Dataset\",\n                    \"action\": \"src=csv_ds\",\n                    \"type\": \"source\"\n                },\n                {\n                    \"id\": 646,\n                    \"datasourceId\": null,\n                    \"nextId\": null,\n                    \"name\": \"Write a Product Pitch\",\n                    \"action\": \"cmd=generate_text;ver=1.0.0;type=ads%2Fpitch_s\",\n                    \"type\": \"action\"\n                }\n            ],\n            \"datasources\": [\n                {\n                    \"id\": 47,\n                    \"type\": \"csv_ds\",\n                    \"url\": \"https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflow-datasources/47/dsrc_1aee2a39-8d40-4816-a2bd-b304a2f93ac8.csv\",\n                    \"attributes\": {\n                        \"id\": \"string\",\n                        \"productName\": \"string\"\n                    }\n                }\n            ]\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get workflow by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/workflows/110",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"workflows",
+								"110"
+							]
+						},
+						"description": "``` javascript\nimport fetch from 'node-fetch'\nimport {\n  initialize,\n  WORKFLOW_EXAMPLE,\n  WORKFLOW_EXECUTION_EXAMPLE,\n} from '@phonal-technologies/drafterai-js'\n// Init an API with apikey and fetch provider\nconst accessKey = process.env.DRAFTER_ACCESS_KEY\nconst drafterApi = initialize(accessKey, {\n  fetch,\n})\n;(async () => {\n  console.log('WORKFLOW_EXAMPLE', WORKFLOW_EXAMPLE)\n  const workflow = await drafterApi.workflows.get(110)\n\n  console.log('Workflow with id 110', workflow)\n})\n\n```"
+					},
+					"response": [
+						{
+							"name": "Get workflow by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/workflows/110",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"workflows",
+										"110"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Allow",
+									"value": "GET,POST,PATCH,PUT,DELETE"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "685"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2ad-Rc1R3YPpxdpeug07cOLHvmVHZCc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Feb 2022 10:31:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 110,\n    \"organizationId\": 1,\n    \"userId\": 112,\n    \"name\": \"Write a Product Pitch Workflow\",\n    \"status\": \"published\",\n    \"description\": \"Write a Product Pitch Workflow\",\n    \"iconUrl\": \"https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflows/110/icon_75573f9e-94e5-41cd-a568-78e6cb08e660.png\",\n    \"firstStepId\": null,\n    \"createdAt\": \"2021-12-09T11:27:48.562Z\",\n    \"updatedAt\": \"2022-01-25T12:16:30.586Z\",\n    \"steps\": [\n        {\n            \"id\": 590,\n            \"datasourceId\": null,\n            \"nextId\": 621,\n            \"name\": \"Form / Manual\",\n            \"action\": \"src=form_manual\",\n            \"type\": \"source\"\n        },\n        {\n            \"id\": 621,\n            \"datasourceId\": null,\n            \"nextId\": null,\n            \"name\": \"Define Hashtags\",\n            \"action\": \"cmd=generate_text;ver=1.0.0;type=text%2Fhashtags\",\n            \"type\": \"action\"\n        }\n    ],\n    \"datasources\": []\n}"
+						}
+					]
+				}
+			],
+			"description": "TBD"
+		},
+		{
+			"name": "Workflow Executions",
+			"item": [
+				{
+					"name": "Get workflow executions list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/workflow-executions/?workflowId=110&$sort[id]=-1&$limit=50",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"workflow-executions",
+								""
+							],
+							"query": [
+								{
+									"key": "workflowId",
+									"value": "110"
+								},
+								{
+									"key": "$sort[id]",
+									"value": "-1"
+								},
+								{
+									"key": "$limit",
+									"value": "50"
+								}
+							]
+						},
+						"description": "``` javascript\nimport fetch from 'node-fetch'\nimport {\n  initialize,\n  WORKFLOW_EXAMPLE,\n  WORKFLOW_EXECUTION_EXAMPLE,\n} from '@phonal-technologies/drafterai-js'\n// Init an API with apikey and fetch provider\nconst accessKey = process.env.DRAFTER_ACCESS_KEY\nconst drafterApi = initialize(accessKey, {\n  fetch,\n})\n;(async () => {\n  console.log('Workflow execution example', WORKFLOW_EXECUTION_EXAMPLE)\n  const wfExecutions = await drafterApi.workflowExecutions.find(\n    { $limit: 10, '$sort[id]': -1 },\n    { all: true }\n  )\n\n  console.log('First 10 workflow executions', wfExecutions)\n})\n\n```"
+					},
+					"response": [
+						{
+							"name": "Get workflow executions list",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/workflow-executions/?workflowId=110&$sort[id]=-1&$limit=50",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"workflow-executions",
+										""
+									],
+									"query": [
+										{
+											"key": "workflowId",
+											"value": "110"
+										},
+										{
+											"key": "$sort[id]",
+											"value": "-1"
+										},
+										{
+											"key": "$limit",
+											"value": "50"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Allow",
+									"value": "GET,POST,PATCH,PUT,DELETE"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b52c-mZErMMzH//lpOaYLAFLjUpGXHuM\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Feb 2022 10:32:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 58,\n    \"limit\": 50,\n    \"skip\": 0,\n    \"data\": [\n        {\n            \"id\": 4924,\n            \"context\": {\n                \"redditTopic\": \"Suggest eCommerce Product Info\"\n            },\n            \"pipeline\": [\n                {\n                    \"redditTopic\": \"Suggest eCommerce Product Info\",\n                    \"textHashtags\": \"#ecommerce #product\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"38d1c1a4-fabc-45a1-b0c7-ef2d3e57791a\",\n            \"errors\": [],\n            \"createdAt\": \"2022-02-03T15:52:56.943Z\",\n            \"updatedAt\": \"2022-02-03T15:53:02.176Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 4467,\n            \"context\": {\n                \"redditTopic\": \"Suggest eCommerce Product Info\"\n            },\n            \"pipeline\": [\n                {\n                    \"redditTopic\": \"Suggest eCommerce Product Info\",\n                    \"textHashtags\": \"\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"1d5b2e28-e2e7-4831-a9d0-28b81bb14532\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-31T15:52:14.351Z\",\n            \"updatedAt\": \"2022-01-31T15:52:17.376Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 4466,\n            \"context\": {\n                \"redditTopic\": \"topic reddit\"\n            },\n            \"pipeline\": [\n                {\n                    \"redditTopic\": \"topic reddit\",\n                    \"textHashtags\": \"#reddit\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"f9272442-4efa-44e0-8a85-f34148b96431\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-31T15:47:50.861Z\",\n            \"updatedAt\": \"2022-01-31T15:47:54.888Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 4465,\n            \"context\": {\n                \"redditTopic\": \"test topic\"\n            },\n            \"pipeline\": [\n                {\n                    \"redditTopic\": \"test topic\",\n                    \"textHashtags\": \"\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"0ce17b4c-7de8-4f49-9787-e0a4761a61fc\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-31T15:45:38.652Z\",\n            \"updatedAt\": \"2022-01-31T15:45:43.333Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 4459,\n            \"context\": {\n                \"redditTopic\": \"How to generate ads texts in bulk?\"\n            },\n            \"pipeline\": [\n                {\n                    \"redditTopic\": \"How to generate ads texts in bulk?\",\n                    \"textHashtags\": \"#ads #texts\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"5fbae51f-e304-45a1-ba92-e810e9855def\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-31T15:06:53.260Z\",\n            \"updatedAt\": \"2022-01-31T15:06:56.403Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 2681,\n            \"context\": {\n                \"redditTopic\": \"Choosing an E-commerce platform for your Dropshipping Business\"\n            },\n            \"pipeline\": [\n                {\n                    \"redditTopic\": \"Choosing an E-commerce platform for your Dropshipping Business\",\n                    \"textLabels\": \"Does your Dropshipping business need a website?\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"b9062cc2-9e0a-4d83-a8ea-32d3ba191a0f\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-28T09:15:07.016Z\",\n            \"updatedAt\": \"2022-01-28T09:15:09.746Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 2680,\n            \"context\": {\n                \"redditTopic\": \"Choosing an E-commerce platform for your Dropshipping Business\"\n            },\n            \"pipeline\": [\n                {\n                    \"redditTopic\": \"Choosing an E-commerce platform for your Dropshipping Business\",\n                    \"textType\": \"Product Pitch\",\n                    \"textEntity\": \"- Dropshipping [SECTOR]\\n- E-commerce [SECTOR]\\n- Business [SECTOR]\\n- Platform [SECTOR]\\n- Dropshipping Business [SECTOR]\",\n                    \"textKeywords\": \"dropshipping, business, e-commerce\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"013a29b7-b02a-483a-9111-e1261a14b089\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-28T09:13:46.604Z\",\n            \"updatedAt\": \"2022-01-28T09:13:52.758Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 2679,\n            \"context\": {\n                \"redditTopic\": \"Choosing an E-commerce platform for your Dropshipping Business\"\n            },\n            \"pipeline\": [\n                {\n                    \"redditTopic\": \"Choosing an E-commerce platform for your Dropshipping Business\",\n                    \"urlCategory\": \"E-Commerce\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"b524bc01-6453-443c-9258-10ba923e92a6\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-28T09:12:41.584Z\",\n            \"updatedAt\": \"2022-01-28T09:12:45.330Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 2678,\n            \"context\": {\n                \"redditTopic\": \"Mod Poll: Best Website Platform / CMS for Dropshipping\"\n            },\n            \"pipeline\": [\n                {\n                    \"redditTopic\": \"Mod Poll: Best Website Platform / CMS for Dropshipping\",\n                    \"urlCategory\": \"Software Development\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"0cfafa1a-5174-4b0b-9ae2-bdea9881a32e\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-28T09:04:50.784Z\",\n            \"updatedAt\": \"2022-01-28T09:04:55.814Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 1493,\n            \"context\": {\n                \"productTitle\": \"A product title \"\n            },\n            \"pipeline\": [\n                {\n                    \"productTitle\": \"A product title \",\n                    \"urlCategory\": \"Product Title\",\n                    \"adsFeatures\": \"✅\",\n                    \"textStory\": \"Mildred's life was perfect. She had a great job, a loving husband and a beautiful daughter. So when her husband proposed a cross country move for a better job, she was really excited. She loved being a stay at home mom and she knew that her daughter would have a better life in California. They got there and she was right, she loved being able to take her daughter to the park and go to the beach. They were able to buy a bigger house and their daughter could really spread her wings. She loved being there so much that she didn't notice the distance from family until it was too late. Her mom got sick back home and she had to leave her daughter for weeks to take care of her. Her daughter missed her terribly but they did their best to make it work. One day while she was taking care of her mom, she sent a final text message to her husband saying \\\"I can't do this anymore.\\\" When he asked what happened she told him everything. He was mad but he decided that they were going back home because he wanted them together. And so they did, they moved back home where they had always been happy and learned how to work together again.\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"9e2880e1-39f0-4384-823d-501767a003d0\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-26T08:23:15.271Z\",\n            \"updatedAt\": \"2022-01-26T08:23:36.609Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 1470,\n            \"context\": {\n                \"productTitle\": \"Alienware M15 R6 Gaming Laptop, 15.6 inch QHD 240Hz Display, Intel Core i7-11800H, 32GB DDR4 RAM, 1TB SSD, NVIDIA GeForce RTX 3080 8GB GDDR6, Windows 11 Home, Dark Side of The Moon (Latest Model)\"\n            },\n            \"pipeline\": [\n                {\n                    \"productTitle\": \"Alienware M15 R6 Gaming Laptop, 15.6 inch QHD 240Hz Display, Intel Core i7-11800H, 32GB DDR4 RAM, 1TB SSD, NVIDIA GeForce RTX 3080 8GB GDDR6, Windows 11 Home, Dark Side of The Moon (Latest Model)\",\n                    \"urlCategory\": \"Gaming Laptop\",\n                    \"adsFeatures\": \"✅ High quality IPS display\\n✅ NVIDIA GeForce RTX graphics card\\n✅ Customizable in over a dozen different color combinations\\n✅ Latest QHD panel with 240Hz refresh rate\",\n                    \"textStory\": \"\\\"Dad,\\\" the gamer said. \\\"I really need a new gaming laptop.\\\"\\n\\n\\\"Sweetheart,\\\" the dad replied. \\\"We'll get you a new one after your birthday.\\\"\\n\\nThe gamer looked up from his game and sighed. \"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"2c87e729-a2bc-4855-9f31-122c4defa79b\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-24T15:12:34.747Z\",\n            \"updatedAt\": \"2022-01-24T15:12:43.027Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 1469,\n            \"context\": {\n                \"productTitle\": \"Alienware M15 R6 Gaming Laptop, 15.6 inch QHD 240Hz Display, Intel Core i7-11800H, 32GB DDR4 RAM, 1TB SSD, NVIDIA GeForce RTX 3080 8GB GDDR6, Windows 11 Home, Dark Side of The Moon (Latest Model)\"\n            },\n            \"pipeline\": [\n                {\n                    \"productTitle\": \"Alienware M15 R6 Gaming Laptop, 15.6 inch QHD 240Hz Display, Intel Core i7-11800H, 32GB DDR4 RAM, 1TB SSD, NVIDIA GeForce RTX 3080 8GB GDDR6, Windows 11 Home, Dark Side of The Moon (Latest Model)\",\n                    \"urlCategory\": \"Gaming Laptop\",\n                    \"adsPitchS\": \"If you're looking for the perfect laptop to give your life an edge, then you're in luck. The 15 inch Alienware M15 R6 Gaming Laptop has a QHD 240Hz Display and Windows 11 Home System. Plus it has liquid cooling and liquid diffusion for all those liquid-based battles you can't wait to take on.\",\n                    \"adsFeatures\": \"✅ Latest model\\n✅ 15.6 inch, QHD 240Hz Display\\n✅ Windows 11 Home\\n✅ Intel Core i7-11800H\\n✅ NVIDIA GeForce RTX 3080 8GB GDDR6\\n✅ 32GB DDR4 RAM\\n✅ 1TB SSD\",\n                    \"textKeywords\": \"laptop, gaming, liquid cooling, liquid diffusion\",\n                    \"textStory\": \"It was a dark and stormy night. It felt as if the world had gone mad amidst the ever-present lightning and thunder. Suddenly, a flash of lightning revealed a woman who was waiting for a bus on a street corner. The rain was pouring down hard, but the woman didn't seem to be bothered by it at all. She just went on waiting for her ride patiently. It wasn't long before a bus pulled up and the woman stepped inside. The door had barely closed when the door opened again and another person came in, dripping wet from head to toe, with two bags of groceries in tow. With no room left inside the bus, the driver gestured to the woman with his hand as if to say \\\"you missed your stop\\\" whereupon she got up and slipped out of the vehicle with an apologetic smile on her face.\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"47cc095e-9dab-4a5c-98f2-15ef3b3e95f1\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-24T15:10:57.491Z\",\n            \"updatedAt\": \"2022-01-24T15:11:18.527Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 1468,\n            \"context\": {\n                \"productTitle\": \"Alienware M15 R6 Gaming Laptop, 15.6 inch QHD 240Hz Display, Intel Core i7-11800H, 32GB DDR4 RAM, 1TB SSD, NVIDIA GeForce RTX 3080 8GB GDDR6, Windows 11 Home, Dark Side of The Moon (Latest Model)\"\n            },\n            \"pipeline\": [\n                {\n                    \"productTitle\": \"Alienware M15 R6 Gaming Laptop, 15.6 inch QHD 240Hz Display, Intel Core i7-11800H, 32GB DDR4 RAM, 1TB SSD, NVIDIA GeForce RTX 3080 8GB GDDR6, Windows 11 Home, Dark Side of The Moon (Latest Model)\",\n                    \"urlCategory\": \"Gaming Laptop\",\n                    \"adsPitchS\": \"The Alienware M15 R6 offers the latest technology with a 15.6 inch QHD 240Hz display and Windows 11 Home. This model has Intel Core i7-11800H and NVIDIA GeForce RTX 3080 8GB GDDR6.\",\n                    \"adsFeatures\": \"✅ 15.6 inch QHD 240Hz Display\\n✅ Intel Core i7-11800H\\n✅ 32GB DDR4 RAM\\n✅ 1TB SSD\\n✅ NVIDIA GeForce RTX 3080 8GB GDDR6\",\n                    \"textKeywords\": \"Alienware, Windows 11, Home\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"8e71a8d6-59ee-4ac6-9712-2139fa3576c0\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-24T15:08:05.375Z\",\n            \"updatedAt\": \"2022-01-24T15:08:16.901Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 1467,\n            \"context\": {\n                \"productTitle\": \"Alienware M15 R6 Gaming Laptop, 15.6 inch QHD 240Hz Display, Intel Core i7-11800H, 32GB DDR4 RAM, 1TB SSD, NVIDIA GeForce RTX 3080 8GB GDDR6, Windows 11 Home, Dark Side of The Moon (Latest Model)\"\n            },\n            \"pipeline\": [\n                {\n                    \"productTitle\": \"Alienware M15 R6 Gaming Laptop, 15.6 inch QHD 240Hz Display, Intel Core i7-11800H, 32GB DDR4 RAM, 1TB SSD, NVIDIA GeForce RTX 3080 8GB GDDR6, Windows 11 Home, Dark Side of The Moon (Latest Model)\",\n                    \"urlCategory\": \"Gaming Laptop\",\n                    \"adsPitchS\": \"Alienware is a high-end laptop that maximizes your gaming experience. With a 240Hz display, a sleek design and a robust frame, it's the perfect choice for a competitive gamer.\",\n                    \"adsFeatures\": \"✅ 15.6 QHD 240Hz display\\n✅ Intel Core i7-11800H\\n✅ 32GB DDR4 RAM\\n✅ NVIDIA GeForce RTX 3080 8GB GDDR6\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"93c4aab7-e236-4714-bba3-328c35c1db23\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-24T14:56:49.825Z\",\n            \"updatedAt\": \"2022-01-24T14:57:02.973Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 1429,\n            \"context\": {\n                \"productTitle\": \"Sceptre 27-Inch FHD LED Gaming Monitor 75Hz 2X HDMI VGA Build-in\"\n            },\n            \"pipeline\": [\n                {\n                    \"productTitle\": \"Sceptre 27-Inch FHD LED Gaming Monitor 75Hz 2X HDMI VGA Build-in\",\n                    \"urlCategory\": \"Computer Monitors\",\n                    \"adsPitchS\": \"Sceptre takes your gaming to the next level with their 27-inch FHD LED monitor. The 75hz refresh rate (2x faster than typical electronics) and 3-watt speakers ensure a clean, realistic gameplay.\",\n                    \"adsFeatures\": \"✅ 75Hz Refresh Rate\\n✅ 2X HDMIs\\n✅ VGA Input for PC\\n✅ Full HD Resolution\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"605b5701-7752-4355-a024-dd58ca098f1a\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-24T12:50:02.106Z\",\n            \"updatedAt\": \"2022-01-24T12:50:10.699Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 1428,\n            \"context\": {\n                \"productTitle\": \"SAMSUNG 980 SSD 1TB M.2 NVMe Interface Internal Solid State Drive\"\n            },\n            \"pipeline\": [\n                {\n                    \"productTitle\": \"SAMSUNG 980 SSD 1TB M.2 NVMe Interface Internal Solid State Drive\",\n                    \"urlCategory\": \"Storage Devices\",\n                    \"adsPitchS\": \"Samsung SSDs boast a storage capacity of 1TB and an NVME interface.\\nSuperior performance means it's perfect for gamers, creative professionals, data centers and more.\",\n                    \"adsFeatures\": \"✅ Blazing fast\\n✅ Delivers 2.4x more performance than a SATA SSD\\n✅ Includes a limited lifetime warranty\\n✅ 10 year limited warranty\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"da651b2f-33a6-4cd7-b0ef-c37d38d4650a\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-24T12:47:56.660Z\",\n            \"updatedAt\": \"2022-01-24T12:48:04.030Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 1427,\n            \"context\": {\n                \"productTitle\": \"SAMSUNG 980 SSD 1TB M.2 NVMe Interface Internal Solid State Drive\"\n            },\n            \"pipeline\": [\n                {\n                    \"productTitle\": \"SAMSUNG 980 SSD 1TB M.2 NVMe Interface Internal Solid State Drive\",\n                    \"urlCategory\": \"Storage Devices\",\n                    \"adsQuestionS\": \"I'm currently out of space on my computer. Does this SSD have enough capacity to take off some of the weight?\",\n                    \"adsTagline\": \"The next level in SSD performance\",\n                    \"googleAdsBody\": \"The next level in SSD performance.\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"46f4d503-c132-49c6-8e41-54503be3d0f6\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-24T12:45:28.932Z\",\n            \"updatedAt\": \"2022-01-24T12:45:36.599Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 1426,\n            \"context\": {\n                \"websiteUrl\": \"\",\n                \"productTitle\": \"SAMSUNG 980 SSD 1TB M.2 NVMe Interface Internal Solid State Drive\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"\",\n                    \"productTitle\": \"SAMSUNG 980 SSD 1TB M.2 NVMe Interface Internal Solid State Drive\",\n                    \"urlCategory\": \"Storage Devices\",\n                    \"adsPitchS\": \"The SAMSUNG 980 SSD 1TB provides speed, stability and light-weight.\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a19ee2f0-13f1-4fde-b6ef-fd8871ede629\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-24T12:43:14.779Z\",\n            \"updatedAt\": \"2022-01-24T12:43:20.787Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 1246,\n            \"context\": {\n                \"websiteUrl\": \"https://drafter.ai\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://drafter.ai\",\n                    \"urlTitle\": \"⚡ Drafter AI: Build AI Features in Days\",\n                    \"urlDescription\": \"Build, test, use and integrate AI without a line of code. Drafter AI - a no-code platform with 100+ data sources and ML models that work together.\",\n                    \"urlType\": \"website\",\n                    \"urlImage\": \"https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png\",\n                    \"urlFavicon\": \"https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/\",\n                    \"adsPitchS\": \"Drafter AI is a no-code platform with 100+ data sources and ML models. It allows anyone to build, test, use, and integrate AI without writing a single line of code.\",\n                    \"adsTagline\": \"Build AI without code\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"c38d681a-35bb-4b20-b499-203034c45b04\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-21T09:17:02.479Z\",\n            \"updatedAt\": \"2022-01-21T09:17:16.505Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 1245,\n            \"context\": {\n                \"websiteUrl\": \"https://www.amazon.com/Seagate-Portable-External-Hard-Drive/dp/B07CRG94G3/ref=lp_16225007011_1_2\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://www.amazon.com/Seagate-Portable-External-Hard-Drive/dp/B07CRG94G3/ref=lp_16225007011_1_2\",\n                    \"urlTitle\": \"Seagate Portable 2TB External Hard Drive Portable HDD – USB 3.0 for PC, Mac, PlayStation, & Xbox - 1-Year Rescue Service (STGX2000400)\",\n                    \"urlDescription\": \"Easily store and access 2TB of content on the go with the Seagate Portable Drive, a great laptop hard drive. Designed to work with Windows or Mac computers, this compact external hard drive makes backup a snap. Just drag and drop To get set up, connect the portable hard drive to a computer for au...\",\n                    \"urlImage\": \"https://images-na.ssl-images-amazon.com/images/I/31jBba7%2BySL._SR600%2c315_PIWhiteStrip%2cBottomLeft%2c0%2c35_PIStarRatingFOURANDHALF%2cBottomLeft%2c360%2c-6_SR600%2c315_ZA173%252C835%2c445%2c290%2c400%2c400%2cAmazonEmberBold%2c12%2c4%2c0%2c0%2c5_SCLZZZZZZZ_FMpng_BG255%2c255%2c255.jpg\",\n                    \"adsPitchS\": \"The Seagate Portable Drive is a compact external hard drive that stores 2TB of content. It works with Windows or Mac computers and is designed for easy file backup.\",\n                    \"adsTagline\": \"2TB of storage on the go\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"49ffd8ff-eb35-485b-8e28-11a6dc9c5fc6\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-20T14:13:26.841Z\",\n            \"updatedAt\": \"2022-01-20T14:13:50.194Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 1244,\n            \"context\": {\n                \"websiteUrl\": \"https://stripe.com\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://stripe.com\",\n                    \"urlTitle\": \"Online-Zahlungsabwicklung für Internetunternehmen – Stripe\",\n                    \"urlDescription\": \"Die Abwicklung von Online-Zahlungen für Internetunternehmen. Stripe ist eine Kombination aus Zahlungs-APIs, die den Handel für Online-Unternehmen aller Größen ermöglicht und ebenfalls Betrug vorbeugt und das Verwalten von Abonnements möglich macht. Nutzen Sie die Zahlungsplattform von Stripe als eine einfach zu verwendende Lösung, um Zahlungen online anzunehmen und abzuwickeln.\",\n                    \"urlImage\": \"https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80\",\n                    \"urlFavicon\": \"https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico\",\n                    \"adsPitchS\": \"Stripe optimizes payments for online businesses of all sizes. It prevents fraud while also providing subscription management. Stripe is a simple payment platform that makes it easy to accept payments online.\",\n                    \"adsTagline\": \"The world's most powerful payment processing toolkit\",\n                    \"textIntent\": \"Interested in Stripe\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"c7e26c04-1182-4bda-b86d-897b03381bf5\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-20T11:03:51.907Z\",\n            \"updatedAt\": \"2022-01-20T11:04:13.494Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 1243,\n            \"context\": {\n                \"websiteUrl\": \"https://zapier.com\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://zapier.com\",\n                    \"urlTitle\": \"Zapier | The easiest way to automate your work\",\n                    \"urlFavicon\": \"https://cdn.zapier.com/ssr/d69795aaaeeacccad462df7faa1bc2354e9829d5/_next/static/images/favicon.ico\"\n                }\n            ],\n            \"status\": \"failed\",\n            \"datagroup\": \"950cec72-0ff4-4494-831b-e4e951d4b4cd\",\n            \"errors\": [\n                {\n                    \"id\": 539,\n                    \"message\": \"Cannot read property 'length' of undefined\"\n                }\n            ],\n            \"createdAt\": \"2022-01-20T10:21:34.076Z\",\n            \"updatedAt\": \"2022-01-20T10:21:39.329Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 1141,\n            \"context\": {\n                \"websiteUrl\": \"https://en.wikipedia.org/wiki/Magento\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://en.wikipedia.org/wiki/Magento\",\n                    \"urlTitle\": \"Magento - Wikipedia\",\n                    \"urlType\": \"website\",\n                    \"urlImage\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Magento_Logo.svg/1200px-Magento_Logo.svg.png\",\n                    \"urlFavicon\": \"/static/favicon/wikipedia.ico\"\n                }\n            ],\n            \"status\": \"failed\",\n            \"datagroup\": \"fa4a392a-1b3a-4d9d-a3e1-f0d6f7298c06\",\n            \"errors\": [\n                {\n                    \"id\": 539,\n                    \"message\": \"Cannot read property 'length' of undefined\"\n                }\n            ],\n            \"createdAt\": \"2022-01-19T09:04:41.990Z\",\n            \"updatedAt\": \"2022-01-19T09:04:51.601Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 793,\n            \"context\": {\n                \"websiteUrl\": \"https://stripe.com\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://stripe.com\",\n                    \"urlTitle\": \"Online-Zahlungsabwicklung für Internetunternehmen – Stripe\",\n                    \"urlDescription\": \"Die Abwicklung von Online-Zahlungen für Internetunternehmen. Stripe ist eine Kombination aus Zahlungs-APIs, die den Handel für Online-Unternehmen aller Größen ermöglicht und ebenfalls Betrug vorbeugt und das Verwalten von Abonnements möglich macht. Nutzen Sie die Zahlungsplattform von Stripe als eine einfach zu verwendende Lösung, um Zahlungen online anzunehmen und abzuwickeln.\",\n                    \"urlImage\": \"https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80\",\n                    \"urlFavicon\": \"https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico\",\n                    \"adsPitchS\": \"Stripe is the best payment platform for online businesses. It combines payment APIs to make it easy for entrepreneurs of all sizes to start taking payments online. It also prevents frauds and lets you manage your subscriptions. Use Stripe as an easy way to start accepting payments online, and managing them too.\",\n                    \"adsTagline\": \"Eine Lösung für den Erfolg Ihres Geschäfts\",\n                    \"textIntent\": \"Interested in Stripe\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"d55f1aaf-df9f-49a0-b43b-344625c97eae\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-11T19:38:30.628Z\",\n            \"updatedAt\": \"2022-01-11T19:38:51.081Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 792,\n            \"context\": {\n                \"websiteUrl\": \"https://drafter.ai\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://drafter.ai\",\n                    \"urlTitle\": \"⚡ Drafter AI: Build AI Features in Days\",\n                    \"urlDescription\": \"Build, test, use and integrate AI without a line of code. Drafter AI - a no-code platform with 100+ data sources and ML models that work together.\",\n                    \"urlType\": \"website\",\n                    \"urlImage\": \"https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png\",\n                    \"urlFavicon\": \"https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/\",\n                    \"adsPitchS\": \"Drafter AI is a no-code platform that allows you to build AIs without a single line of code. It integrates data from 100+ data sources and ML models to make it work.\",\n                    \"adsTagline\": \"Build, test, use and integrate AI without a line of code\",\n                    \"textIntent\": \"Interested in Demo\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"1e1964f2-15ed-483a-928c-9b11990e5377\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-11T19:23:07.651Z\",\n            \"updatedAt\": \"2022-01-11T19:23:16.492Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 791,\n            \"context\": {\n                \"websiteUrl\": \"https://drafter.ai\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://drafter.ai\",\n                    \"urlTitle\": \"⚡ Drafter AI: Build AI Features in Days\",\n                    \"urlDescription\": \"Build, test, use and integrate AI without a line of code. Drafter AI - a no-code platform with 100+ data sources and ML models that work together.\",\n                    \"urlType\": \"website\",\n                    \"urlImage\": \"https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png\",\n                    \"urlFavicon\": \"https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/\",\n                    \"adsPitchS\": \"Drafter is the first AI platform that requires no coding. It uses 100+ data sources and ML models to create customized AI for any use.\",\n                    \"adsTagline\": \"AI for everyone\",\n                    \"textIntent\": \"Interested in Demo\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"9e02aa11-d1f8-4c8c-b3a1-a892ea964b09\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-11T19:22:12.459Z\",\n            \"updatedAt\": \"2022-01-11T19:22:23.941Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 790,\n            \"context\": {\n                \"websiteUrl\": \"https://fake-darafter.ai\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://fake-darafter.ai\"\n                }\n            ],\n            \"status\": \"failed\",\n            \"datagroup\": \"e5d79b4a-35a5-48c1-bbf4-d6bd994a16d5\",\n            \"errors\": [\n                {\n                    \"id\": 538,\n                    \"message\": \"An unknown error has occured. Please try again later.\"\n                }\n            ],\n            \"createdAt\": \"2022-01-11T19:17:45.111Z\",\n            \"updatedAt\": \"2022-01-11T19:17:49.414Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 789,\n            \"context\": {\n                \"websiteUrl\": \"https://non-drafter.ai\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://non-drafter.ai\"\n                }\n            ],\n            \"status\": \"failed\",\n            \"datagroup\": \"0055ce17-1af3-4c06-b9f8-929b358af9ac\",\n            \"errors\": [\n                {\n                    \"id\": 538\n                }\n            ],\n            \"createdAt\": \"2022-01-11T19:14:19.001Z\",\n            \"updatedAt\": \"2022-01-11T19:14:23.997Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 788,\n            \"context\": {\n                \"websiteUrl\": \"https://drafter.ai\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://drafter.ai\",\n                    \"urlTitle\": \"⚡ Drafter AI: Build AI Features in Days\",\n                    \"urlDescription\": \"Build, test, use and integrate AI without a line of code. Drafter AI - a no-code platform with 100+ data sources and ML models that work together.\",\n                    \"urlType\": \"website\",\n                    \"urlImage\": \"https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png\",\n                    \"urlFavicon\": \"https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/\",\n                    \"adsPitchS\": \"You want to code AI? Nope! Drafter AI makes it easy to to create, test, release and integrate AI with 100+ pre-built data sources and ML models.\",\n                    \"adsTagline\": \"Build, use and integrate AI\",\n                    \"textIntent\": \"Interested in Demo\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"7ef68a78-4cc8-427a-912e-a0b0b05e4744\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-11T19:13:54.031Z\",\n            \"updatedAt\": \"2022-01-11T19:14:01.871Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 787,\n            \"context\": {\n                \"websiteUrl\": \"https://drafter.ai\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://drafter.ai\",\n                    \"urlTitle\": \"⚡ Drafter AI: Build AI Features in Days\",\n                    \"urlDescription\": \"Build, test, use and integrate AI without a line of code. Drafter AI - a no-code platform with 100+ data sources and ML models that work together.\",\n                    \"urlType\": \"website\",\n                    \"urlImage\": \"https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png\",\n                    \"urlFavicon\": \"https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/\",\n                    \"adsPitchS\": \"Drafter AI is a no-code platform for data sources and ML models. It works to build, test and create AI for all, without any coding knowledge.\",\n                    \"adsTagline\": \"Build, test, and integrate AI without a line of code\",\n                    \"textIntent\": \"Interested in Demo\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"da464e00-729d-4622-bedb-817a8ee17f93\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-11T19:13:18.181Z\",\n            \"updatedAt\": \"2022-01-11T19:13:36.905Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 786,\n            \"context\": {\n                \"websiteUrl\": \"https://drafter.ai\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://drafter.ai\",\n                    \"urlTitle\": \"⚡ Drafter AI: Build AI Features in Days\",\n                    \"urlDescription\": \"Build, test, use and integrate AI without a line of code. Drafter AI - a no-code platform with 100+ data sources and ML models that work together.\",\n                    \"urlType\": \"website\",\n                    \"urlImage\": \"https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png\",\n                    \"urlFavicon\": \"https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/\",\n                    \"adsPitchS\": \"Drafter AI is a no-code platform with 100+ data sources and ML models for use in any situation.\",\n                    \"adsTagline\": \"Creating AI without a line of code\",\n                    \"textIntent\": \"Interested in Demo\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": null,\n            \"errors\": [],\n            \"createdAt\": \"2022-01-11T17:23:07.740Z\",\n            \"updatedAt\": \"2022-01-11T17:23:19.393Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 785,\n            \"context\": {\n                \"websiteUrl\": \"https://drafter.ai\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://drafter.ai\",\n                    \"urlTitle\": \"⚡ Drafter AI: Build AI Features in Days\",\n                    \"urlDescription\": \"Build, test, use and integrate AI without a line of code. Drafter AI - a no-code platform with 100+ data sources and ML models that work together.\",\n                    \"urlType\": \"website\",\n                    \"urlImage\": \"https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png\",\n                    \"urlFavicon\": \"https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/\",\n                    \"adsPitchS\": \"This is the system for the rest of us. You can build, test, use and integrate artificial intelligence without learning code. 100+ data sources and machine learning models work together to help you create an AI-driven product.\",\n                    \"adsTagline\": \"AI without the code\",\n                    \"textIntent\": \"Interested in Demo\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-11T10:15:28.965Z\",\n            \"updatedAt\": \"2022-01-11T10:15:36.013Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 784,\n            \"context\": {\n                \"websiteUrl\": \"https://drafter.ai\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://drafter.ai\",\n                    \"urlTitle\": \"⚡ Drafter AI: Build AI Features in Days\",\n                    \"urlDescription\": \"Build, test, use and integrate AI without a line of code. Drafter AI - a no-code platform with 100+ data sources and ML models that work together.\",\n                    \"urlType\": \"website\",\n                    \"urlImage\": \"https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png\",\n                    \"urlFavicon\": \"https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/\",\n                    \"adsPitchS\": \"Drafter AI is a no-code platform that automates the process of building, testing and using AI. Drafter provides custom data sources and models that work together.\",\n                    \"adsTagline\": \"AI for every problem\",\n                    \"textIntent\": \"Interested in Demo\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-11T10:14:21.867Z\",\n            \"updatedAt\": \"2022-01-11T10:14:32.470Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 783,\n            \"context\": {\n                \"websiteUrl\": \"https://drafter.ai\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://drafter.ai\",\n                    \"urlTitle\": \"⚡ Drafter AI: Build AI Features in Days\",\n                    \"urlDescription\": \"Build, test, use and integrate AI without a line of code. Drafter AI - a no-code platform with 100+ data sources and ML models that work together.\",\n                    \"urlType\": \"website\",\n                    \"urlImage\": \"https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png\",\n                    \"urlFavicon\": \"https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/\",\n                    \"adsPitchS\": \"Drafter AI gives you the power to build, test and use AI without writing a line of code. It integrates 100+ data sources and ML models that work together.\",\n                    \"adsTagline\": \"AI Made Easy\",\n                    \"textIntent\": \"Interested in Demo\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-11T10:13:41.570Z\",\n            \"updatedAt\": \"2022-01-11T10:13:50.429Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 782,\n            \"context\": {\n                \"websiteUrl\": \"https://drafter.ai\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://drafter.ai\",\n                    \"urlTitle\": \"⚡ Drafter AI: Build AI Features in Days\",\n                    \"urlDescription\": \"Build, test, use and integrate AI without a line of code. Drafter AI - a no-code platform with 100+ data sources and ML models that work together.\",\n                    \"urlType\": \"website\",\n                    \"urlImage\": \"https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png\",\n                    \"urlFavicon\": \"https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/\",\n                    \"adsPitchS\": \"Drafter AI is a no-code platform that makes it possible to build, test, use and develop AI without a line of code. It has 100+ data sources and ML models that work together.\",\n                    \"adsTagline\": \"AI without the coding\",\n                    \"textIntent\": \"Interested in Demo\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-11T10:12:11.673Z\",\n            \"updatedAt\": \"2022-01-11T10:12:18.275Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 781,\n            \"context\": {\n                \"websiteUrl\": \"https://drafter.ai\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://drafter.ai\",\n                    \"urlTitle\": \"⚡ Drafter AI: Build AI Features in Days\",\n                    \"urlDescription\": \"Build, test, use and integrate AI without a line of code. Drafter AI - a no-code platform with 100+ data sources and ML models that work together.\",\n                    \"urlType\": \"website\",\n                    \"urlImage\": \"https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png\",\n                    \"urlFavicon\": \"https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/\",\n                    \"adsPitchS\": \"Drafter AI is a no-code platform that provides 100+ data sources and ML models that work together. You can build, test, use and integrate AI without relying on a line of code.\",\n                    \"adsTagline\": \"AI for everyone\",\n                    \"textIntent\": \"Interested in Demo\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-11T10:11:34.722Z\",\n            \"updatedAt\": \"2022-01-11T10:11:41.482Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 780,\n            \"context\": {\n                \"websiteUrl\": \"https://drafter.ai\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://drafter.ai\",\n                    \"urlTitle\": \"⚡ Drafter AI: Build AI Features in Days\",\n                    \"urlDescription\": \"Build, test, use and integrate AI without a line of code. Drafter AI - a no-code platform with 100+ data sources and ML models that work together.\",\n                    \"urlType\": \"website\",\n                    \"urlImage\": \"https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png\",\n                    \"urlFavicon\": \"https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/\",\n                    \"adsPitchS\": \"Drafter AI allows you to use AI without writing code, just drag and drop. It uses pre-built AI models that work together with your data to give you intelligent insights.\",\n                    \"adsTagline\": \"Rapidly build, test, and deploy AI without writing a line of code\",\n                    \"textIntent\": \"Interested in Demo\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-11T10:10:35.190Z\",\n            \"updatedAt\": \"2022-01-11T10:10:44.625Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 779,\n            \"context\": {\n                \"websiteUrl\": \"https://drafter.ai\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://drafter.ai\",\n                    \"urlTitle\": \"⚡ Drafter AI: Build AI Features in Days\",\n                    \"urlDescription\": \"Build, test, use and integrate AI without a line of code. Drafter AI - a no-code platform with 100+ data sources and ML models that work together.\",\n                    \"urlType\": \"website\",\n                    \"urlImage\": \"https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png\",\n                    \"urlFavicon\": \"https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/\",\n                    \"adsPitchS\": \"Use Drafter AI for 100+ data sources in AI without writing a line of code.\",\n                    \"adsTagline\": \"Build and use AI without a line of code\",\n                    \"textIntent\": \"Interested in Demo\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-11T10:07:50.087Z\",\n            \"updatedAt\": \"2022-01-11T10:08:00.413Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 778,\n            \"context\": {\n                \"websiteUrl\": \"https://airtable.com\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://airtable.com\",\n                    \"urlTitle\": \"Airtable | Everyone's app platform\",\n                    \"urlDescription\": \"Airtable is a low-code platform for building collaborative apps. Customize your workflow, collaborate, and achieve ambitious outcomes. Get started for free.\",\n                    \"urlType\": \"website\",\n                    \"urlImage\": \"https://static.airtable.com/images/oembed/airtable.png\",\n                    \"urlFavicon\": \"/images/favicon/baymax/favicon-32x32.png\",\n                    \"adsPitchS\": \"Airtable is a new paradigm for creating tasks, where your workflow is customizable. It allows you to better collaborate with your team on ambitious outcomes.\",\n                    \"adsTagline\": \"Combine your data, without all the work\",\n                    \"textIntent\": \"Interested in Demo\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-11T10:05:18.443Z\",\n            \"updatedAt\": \"2022-01-11T10:05:35.859Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 1\n        },\n        {\n            \"id\": 687,\n            \"context\": {\n                \"websiteUrl\": \"https://stripe.com\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://stripe.com\",\n                    \"urlTitle\": \"Online payment processing for internet businesses - Stripe\",\n                    \"urlDescription\": \"Online payment processing for internet businesses. Stripe is a suite of payment APIs that powers commerce for online businesses of all sizes, including fraud prevention, and subscription management. Use Stripe’s payment platform to accept and process payments online for easy-to-use commerce solutions.\",\n                    \"urlType\": \"site\",\n                    \"urlImage\": \"https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80\",\n                    \"urlAddress\": \"https://stripe.com/\",\n                    \"urlFavicon\": \"https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico\",\n                    \"urlName\": \"Online payment processing for internet businesses\",\n                    \"adsPitchS\": \"Stripe is an online payments company that provides all of the tools your company needs to accept and process payments online. Their suite of APIs offers fraud prevention, subscription management, and easy-to-use commerce solutions.\",\n                    \"adsTagline\": \"Put your store in control\",\n                    \"textIntent\": \"Interested in Demo\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2022-01-04T18:01:33.805Z\",\n            \"updatedAt\": \"2022-01-04T18:01:33.805Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 660,\n            \"context\": {\n                \"websiteUrl\": \"https://stripe.com\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://stripe.com\",\n                    \"urlTitle\": \"Online payment processing for internet businesses - Stripe\",\n                    \"urlDescription\": \"Online payment processing for internet businesses. Stripe is a suite of payment APIs that powers commerce for online businesses of all sizes, including fraud prevention, and subscription management. Use Stripe’s payment platform to accept and process payments online for easy-to-use commerce solutions.\",\n                    \"urlType\": \"site\",\n                    \"urlImage\": \"https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80\",\n                    \"urlAddress\": \"https://stripe.com/en-ca\",\n                    \"urlFavicon\": \"https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico\",\n                    \"urlName\": \"Online payment processing for internet businesses\",\n                    \"adsPitchS\": \"Stripe is a solution for easy-to-use commerce that provides fraud prevention and subscription management services.\",\n                    \"adsTagline\": \"Simple and intuitive payments\",\n                    \"textIntent\": \"Interested in Demo\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2021-12-30T10:30:41.734Z\",\n            \"updatedAt\": \"2021-12-30T10:30:41.734Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 659,\n            \"context\": {\n                \"websiteUrl\": \"https://stripe.com\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://stripe.com\",\n                    \"urlTitle\": \"Online payment processing for internet businesses - Stripe\",\n                    \"urlDescription\": \"Online payment processing for internet businesses. Stripe is a suite of payment APIs that powers commerce for online businesses of all sizes, including fraud prevention, and subscription management. Use Stripe’s payment platform to accept and process payments online for easy-to-use commerce solutions.\",\n                    \"urlType\": \"site\",\n                    \"urlImage\": \"https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80\",\n                    \"urlAddress\": \"https://stripe.com/en-ca\",\n                    \"urlFavicon\": \"https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico\",\n                    \"urlName\": \"Online payment processing for internet businesses\",\n                    \"adsPitchS\": \"Stripe provides the most complete and flexible set of APIs and SDKs for internet businesses. They process and accept payments and offer subscriptions to supercharge your business.\",\n                    \"adsTagline\": \"Three clicks, and you're done\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2021-12-30T10:10:52.420Z\",\n            \"updatedAt\": \"2021-12-30T10:10:52.420Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 658,\n            \"context\": {\n                \"websiteUrl\": \"https://activechat.ai\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://activechat.ai\",\n                    \"urlTitle\": \"AI assistants for customer self-service | Chatbots and live chat for customer service automation\",\n                    \"urlDescription\": \"Take pressure off of your human support and sales teams with conversational AI and customer service automation. Make your customers feel cared for.\",\n                    \"urlType\": \"website\",\n                    \"urlImage\": \"https://activechat.ai/wp-content/uploads/2020/05/customer-service-and-sales-automation.png\",\n                    \"urlAddress\": \"https://activechat.ai/\",\n                    \"urlFavicon\": \"https://activechat.ai/wp-content/uploads/2020/05/cropped-AC_logo_symbol-192x192.png\",\n                    \"urlName\": \"Chatbots and live chat for customer service automation\",\n                    \"adsPitchS\": \"Rather than using human support, take the pressure off with automated AI technology. Your customers will feel cared for and valued.\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2021-12-30T09:55:51.880Z\",\n            \"updatedAt\": \"2021-12-30T09:55:51.880Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 657,\n            \"context\": {\n                \"websiteUrl\": \"https://stripe.com\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://stripe.com\",\n                    \"urlTitle\": \"Online payment processing for internet businesses - Stripe\",\n                    \"urlDescription\": \"Online payment processing for internet businesses. Stripe is a suite of payment APIs that powers commerce for online businesses of all sizes, including fraud prevention, and subscription management. Use Stripe’s payment platform to accept and process payments online for easy-to-use commerce solutions.\",\n                    \"urlType\": \"site\",\n                    \"urlImage\": \"https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80\",\n                    \"urlAddress\": \"https://stripe.com/en-ca\",\n                    \"urlFavicon\": \"https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico\",\n                    \"urlName\": \"Online payment processing for internet businesses\",\n                    \"adsPitchS\": \"Stripe is a suite of payment APIs that have been used by online businesses of all sizes. You can use Stripe to accept and process payments for your business.\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2021-12-28T09:00:59.666Z\",\n            \"updatedAt\": \"2021-12-28T09:00:59.666Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 656,\n            \"context\": {\n                \"websiteUrl\": \"https://stripe.com\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://stripe.com\",\n                    \"urlTitle\": \"Online payment processing for internet businesses - Stripe\",\n                    \"urlDescription\": \"Online payment processing for internet businesses. Stripe is a suite of payment APIs that powers commerce for online businesses of all sizes, including fraud prevention, and subscription management. Use Stripe’s payment platform to accept and process payments online for easy-to-use commerce solutions.\",\n                    \"urlType\": \"site\",\n                    \"urlImage\": \"https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80\",\n                    \"urlAddress\": \"https://stripe.com/\",\n                    \"urlFavicon\": \"https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico\",\n                    \"urlName\": \"Online payment processing for internet businesses\",\n                    \"adsPitchS\": \"Use the Stripe payment API and be on your way to easy and safe commerce.\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2021-12-23T18:11:03.258Z\",\n            \"updatedAt\": \"2021-12-23T18:11:03.258Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 655,\n            \"context\": {\n                \"websiteUrl\": \"https://drafter.ai\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://drafter.ai\",\n                    \"urlTitle\": \"⚡ Drafter AI: Build AI Features in Days\",\n                    \"urlDescription\": \"Build, test, use and integrate AI without a line of code. Drafter AI - a no-code platform with 100+ data sources and ML models that work together.\",\n                    \"urlType\": \"website\",\n                    \"urlImage\": \"https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png\",\n                    \"urlAddress\": \"https://drafter.ai/\",\n                    \"urlFavicon\": \"https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/\",\n                    \"urlName\": \"⚡ Drafter AI\",\n                    \"adsPitchS\": \"Drafter AI is the ultimate no-code platform for building, testing, integrating AI, and machine learning. Drafter AI is full of models that work with no coding required.\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2021-12-23T18:02:28.762Z\",\n            \"updatedAt\": \"2021-12-23T18:02:28.762Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 654,\n            \"context\": {\n                \"websiteUrl\": \"https://stripe.com\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://stripe.com\",\n                    \"urlTitle\": \"Online payment processing for internet businesses - Stripe\",\n                    \"urlDescription\": \"Online payment processing for internet businesses. Stripe is a suite of payment APIs that powers commerce for online businesses of all sizes, including fraud prevention, and subscription management. Use Stripe’s payment platform to accept and process payments online for easy-to-use commerce solutions.\",\n                    \"urlType\": \"site\",\n                    \"urlImage\": \"https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80\",\n                    \"urlAddress\": \"https://stripe.com/\",\n                    \"urlFavicon\": \"https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico\",\n                    \"urlName\": \"Online payment processing for internet businesses\",\n                    \"adsPitchS\": \"Stripe automates the backend of your ecommerce business, empowering you to focus on the things you do best. With an easy-to-use platform and a suite of payment APIs, Stripe provides reliable, low-cost online payment processing.\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2021-12-23T18:01:59.643Z\",\n            \"updatedAt\": \"2021-12-23T18:01:59.643Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 650,\n            \"context\": {\n                \"websiteUrl\": \"https://stripe.com\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://stripe.com\",\n                    \"urlTitle\": \"Online payment processing for internet businesses - Stripe\",\n                    \"urlDescription\": \"Online payment processing for internet businesses. Stripe is a suite of payment APIs that powers commerce for online businesses of all sizes, including fraud prevention, and subscription management. Use Stripe’s payment platform to accept and process payments online for easy-to-use commerce solutions.\",\n                    \"urlType\": \"site\",\n                    \"urlImage\": \"https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80\",\n                    \"urlAddress\": \"https://stripe.com/\",\n                    \"urlFavicon\": \"https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico\",\n                    \"urlName\": \"Online payment processing for internet businesses\",\n                    \"adsPitchS\": \"The Stripe payment API is a suite of payment methods for any type of business. It has fraud prevention and subscription management, and makes payments easy to maintain your online business.\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2021-12-21T15:31:19.325Z\",\n            \"updatedAt\": \"2021-12-21T15:31:19.325Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 649,\n            \"context\": {\n                \"websiteUrl\": \"https://stripe.com\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://stripe.com\",\n                    \"urlTitle\": \"Online payment processing for internet businesses - Stripe\",\n                    \"urlDescription\": \"Online payment processing for internet businesses. Stripe is a suite of payment APIs that powers commerce for online businesses of all sizes, including fraud prevention, and subscription management. Use Stripe’s payment platform to accept and process payments online for easy-to-use commerce solutions.\",\n                    \"urlType\": \"site\",\n                    \"urlImage\": \"https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80\",\n                    \"urlAddress\": \"https://stripe.com/\",\n                    \"urlFavicon\": \"https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico\",\n                    \"urlName\": \"Online payment processing for internet businesses\",\n                    \"adsPitchS\": \"Stripe is the payment processing platform for all of your online needs.\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2021-12-20T15:05:48.763Z\",\n            \"updatedAt\": \"2021-12-20T15:05:48.763Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        },\n        {\n            \"id\": 648,\n            \"context\": {\n                \"websiteUrl\": \"https://stripe.com\"\n            },\n            \"pipeline\": [\n                {\n                    \"websiteUrl\": \"https://stripe.com\",\n                    \"urlTitle\": \"Online payment processing for internet businesses - Stripe\",\n                    \"urlDescription\": \"Online payment processing for internet businesses. Stripe is a suite of payment APIs that powers commerce for online businesses of all sizes, including fraud prevention, and subscription management. Use Stripe’s payment platform to accept and process payments online for easy-to-use commerce solutions.\",\n                    \"urlType\": \"site\",\n                    \"urlImage\": \"https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80\",\n                    \"urlAddress\": \"https://stripe.com/\",\n                    \"urlFavicon\": \"https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico\",\n                    \"urlName\": \"Online payment processing for internet businesses\",\n                    \"adsPitchS\": \"Stripe is an online payment processing system for online businesses. It provides the ability to accept and process payments for an easy-to-use, joyous commerce solution.\"\n                }\n            ],\n            \"status\": \"completed\",\n            \"datagroup\": \"a7adaadb-201b-4029-ba66-7d92c914e21e\",\n            \"errors\": [],\n            \"createdAt\": \"2021-12-20T14:53:24.922Z\",\n            \"updatedAt\": \"2021-12-20T14:53:24.922Z\",\n            \"workflowId\": 110,\n            \"organizationId\": 1,\n            \"userId\": 3\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get workflow execution by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/workflow-executions/4924",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"workflow-executions",
+								"4924"
+							]
+						},
+						"description": "``` javascript\nimport fetch from 'node-fetch'\nimport {\n  initialize,\n  WORKFLOW_EXAMPLE,\n  WORKFLOW_EXECUTION_EXAMPLE,\n} from '@phonal-technologies/drafterai-js'\n// Init an API with apikey and fetch provider\nconst accessKey = process.env.DRAFTER_ACCESS_KEY\nconst drafterApi = initialize(accessKey, {\n  fetch,\n})\n;(async () => {\n  console.log('Workflow execution example', WORKFLOW_EXECUTION_EXAMPLE)\n  const wfExecution = await drafterApi.workflowExecutions.get(4924)\n\n  console.log('Get workflow execution', wfExecution)\n})\n\n```"
+					},
+					"response": [
+						{
+							"name": "Get workflow execution by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/workflow-executions/4924",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"workflow-executions",
+										"4924"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Allow",
+									"value": "GET,POST,PATCH,PUT,DELETE"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "378"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"17a-4snTCLMki+9611/ZA8s5UnoSyF4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Feb 2022 10:33:24 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 4924,\n    \"context\": {\n        \"redditTopic\": \"Suggest eCommerce Product Info\"\n    },\n    \"pipeline\": [\n        {\n            \"redditTopic\": \"Suggest eCommerce Product Info\",\n            \"textHashtags\": \"#ecommerce #product\"\n        }\n    ],\n    \"status\": \"completed\",\n    \"datagroup\": \"38d1c1a4-fabc-45a1-b0c7-ef2d3e57791a\",\n    \"errors\": [],\n    \"createdAt\": \"2022-02-03T15:52:56.943Z\",\n    \"updatedAt\": \"2022-02-03T15:53:02.176Z\",\n    \"workflowId\": 110,\n    \"organizationId\": 1,\n    \"userId\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Create workflow execution",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"workflowId\": 110,\n        \"context\": {\n            \"redditTopic\": \"Suggest eCommerce Product Info\" \n        }\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/workflow-executions",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"workflow-executions"
+							]
+						},
+						"description": "``` javascript\nimport fetch from 'node-fetch'\nimport {\n  initialize,\n  WORKFLOW_EXAMPLE,\n  WORKFLOW_EXECUTION_EXAMPLE,\n} from '@phonal-technologies/drafterai-js'\n// Init an API with apikey and fetch provider\nconst accessKey = process.env.DRAFTER_ACCESS_KEY\nconst drafterApi = initialize(accessKey, {\n  fetch,\n})\n;(async () => {\n  console.log('Workflow execution example', WORKFLOW_EXECUTION_EXAMPLE)\n  const wfExecutions = await drafterApi.workflowExecutions.create({\n    \"workflowId\": 110,\n    \"context\": { \"redditTopic\": \"Suggest eCommerce Product Info\"  }\n  })\n\n  console.log('Workflow executions', wfExecutions)\n})\n\n```"
+					},
+					"response": [
+						{
+							"name": "Validation Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n    {\n        \"workflowId\": 110,\n        \"context\": {\n            \"redditTopic\": \"Suggest eCommerce Product Info\" \n        }\n    }\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/workflow-executions",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"workflow-executions"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Allow",
+									"value": "GET,POST,PATCH,PUT,DELETE"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "124"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"7c-b7uwF+XimfdTPQSpqakcVXvp0lU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Feb 2022 10:35:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": {\n        \"name\": \"GeneralError\",\n        \"message\": \"context is a required field\",\n        \"code\": 500,\n        \"className\": \"general-error\",\n        \"errors\": {}\n    }\n}"
+						},
+						{
+							"name": "Create workflow execution",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n    {\n        \"workflowId\": 110,\n        \"context\": {\n            \"redditTopic\": \"Suggest eCommerce Product Info\" \n        }\n    }\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/workflow-executions",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"workflow-executions"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Allow",
+									"value": "GET,POST,PATCH,PUT,DELETE"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "292"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"124-GY6ddAWfbE0BCMN0/g6E5fYkoNU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Feb 2022 10:36:08 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"pipeline\": [],\n        \"status\": \"queued\",\n        \"errors\": [],\n        \"id\": 5375,\n        \"workflowId\": 110,\n        \"context\": {\n            \"redditTopic\": \"Suggest eCommerce Product Info\"\n        },\n        \"datagroup\": \"9cc979ea-5ce2-4130-bb9e-169dbb050a0f\",\n        \"organizationId\": 1,\n        \"userId\": 1,\n        \"createdAt\": \"2022-02-05T10:36:07.500Z\",\n        \"updatedAt\": \"2022-02-05T10:36:07.500Z\"\n    }\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get users list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/users",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get users list",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/users",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Allow",
+									"value": "GET,POST,PATCH,PUT,DELETE"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1739-vC87/Nc9ahDYE8+dKF2E/E8n5zM\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Feb 2022 10:37:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 12,\n    \"limit\": 10,\n    \"skip\": 0,\n    \"data\": [\n        {\n            \"id\": 2,\n            \"organizationId\": 1,\n            \"enabled\": true,\n            \"role\": \"user\",\n            \"email\": \"dmitry.tuzenkvo@gmail.com\",\n            \"avatarUrl\": null,\n            \"firstName\": \"Dmitry\",\n            \"lastName\": \"Tuzenkov\",\n            \"googleId\": null,\n            \"facebookId\": null,\n            \"twitterId\": null,\n            \"hasEmailSub\": true,\n            \"hasVerifiedEmail\": true,\n            \"acceptedTerms\": true,\n            \"refererProvider\": null,\n            \"refererProviderCode\": null,\n            \"refererOwnCode\": null,\n            \"subscription\": {\n                \"id\": 2,\n                \"planId\": \"2\",\n                \"status\": \"active\",\n                \"credits\": 1000000,\n                \"usedCredits\": 0,\n                \"trialEndsAt\": null,\n                \"stripeId\": null,\n                \"stripe\": null\n            },\n            \"organization\": {\n                \"id\": 1,\n                \"name\": \"Drafter Developers Inc.\",\n                \"status\": \"active\",\n                \"ownerId\": 1\n            }\n        },\n        {\n            \"id\": 9,\n            \"organizationId\": 1,\n            \"enabled\": true,\n            \"role\": \"owner\",\n            \"email\": \"owner@drafter.ai\",\n            \"avatarUrl\": null,\n            \"firstName\": \"Owner\",\n            \"lastName\": \"Drafter\",\n            \"googleId\": null,\n            \"facebookId\": null,\n            \"twitterId\": null,\n            \"hasEmailSub\": true,\n            \"hasVerifiedEmail\": true,\n            \"acceptedTerms\": true,\n            \"refererProvider\": null,\n            \"refererProviderCode\": null,\n            \"refererOwnCode\": null,\n            \"subscription\": {\n                \"id\": 9,\n                \"planId\": \"2\",\n                \"status\": \"active\",\n                \"credits\": 1000000,\n                \"usedCredits\": 0,\n                \"trialEndsAt\": null,\n                \"stripeId\": null,\n                \"stripe\": null\n            },\n            \"organization\": {\n                \"id\": 1,\n                \"name\": \"Drafter Developers Inc.\",\n                \"status\": \"active\",\n                \"ownerId\": 1\n            }\n        },\n        {\n            \"id\": 116,\n            \"organizationId\": 1,\n            \"enabled\": true,\n            \"role\": \"user\",\n            \"email\": \"dmitry.tuzenkov+invitation4@gmail.com\",\n            \"avatarUrl\": null,\n            \"firstName\": \"Dmitry\",\n            \"lastName\": \"Tuzenkov\",\n            \"googleId\": null,\n            \"facebookId\": null,\n            \"twitterId\": null,\n            \"hasEmailSub\": true,\n            \"hasVerifiedEmail\": true,\n            \"acceptedTerms\": true,\n            \"refererProvider\": null,\n            \"refererProviderCode\": null,\n            \"refererOwnCode\": null,\n            \"subscription\": {\n                \"id\": 58,\n                \"planId\": \"2\",\n                \"status\": \"active\",\n                \"credits\": 1000000,\n                \"usedCredits\": 0,\n                \"trialEndsAt\": null,\n                \"stripeId\": null,\n                \"stripe\": null\n            },\n            \"organization\": {\n                \"id\": 1,\n                \"name\": \"Drafter Developers Inc.\",\n                \"status\": \"active\",\n                \"ownerId\": 1\n            }\n        },\n        {\n            \"id\": 116,\n            \"organizationId\": 1,\n            \"enabled\": true,\n            \"role\": \"user\",\n            \"email\": \"dmitry.tuzenkov+invitation4@gmail.com\",\n            \"avatarUrl\": null,\n            \"firstName\": \"Dmitry\",\n            \"lastName\": \"Tuzenkov\",\n            \"googleId\": null,\n            \"facebookId\": null,\n            \"twitterId\": null,\n            \"hasEmailSub\": true,\n            \"hasVerifiedEmail\": true,\n            \"acceptedTerms\": true,\n            \"refererProvider\": null,\n            \"refererProviderCode\": null,\n            \"refererOwnCode\": null,\n            \"subscription\": {\n                \"id\": 59,\n                \"planId\": \"2\",\n                \"status\": \"active\",\n                \"credits\": 1000000,\n                \"usedCredits\": 0,\n                \"trialEndsAt\": null,\n                \"stripeId\": null,\n                \"stripe\": null\n            },\n            \"organization\": {\n                \"id\": 1,\n                \"name\": \"Drafter Developers Inc.\",\n                \"status\": \"active\",\n                \"ownerId\": 1\n            }\n        },\n        {\n            \"id\": 1,\n            \"organizationId\": 1,\n            \"enabled\": true,\n            \"role\": \"owner\",\n            \"email\": \"owner@new.drafter.ai\",\n            \"avatarUrl\": null,\n            \"firstName\": \"Oleg\",\n            \"lastName\": \"Voronko\",\n            \"googleId\": null,\n            \"facebookId\": null,\n            \"twitterId\": null,\n            \"hasEmailSub\": true,\n            \"hasVerifiedEmail\": true,\n            \"acceptedTerms\": true,\n            \"refererProvider\": null,\n            \"refererProviderCode\": null,\n            \"refererOwnCode\": null,\n            \"subscription\": {\n                \"id\": 1,\n                \"planId\": \"2\",\n                \"status\": \"active\",\n                \"credits\": 1000000,\n                \"usedCredits\": 327051,\n                \"trialEndsAt\": null,\n                \"stripeId\": \"cus_KkMxk40DlDxi0m\",\n                \"stripe\": {\n                    \"subscription\": \"sub_1K4sDHEBSGAEGWrHNIgRxddY\",\n                    \"subscription_item\": \"si_KkMxT2vMgYddv6\",\n                    \"priceId\": \"price_1J8nEbEBSGAEGWrHvjTEB1L4\",\n                    \"productId\": \"prod_JmLwGBZbrM1h12\"\n                }\n            },\n            \"organization\": {\n                \"id\": 1,\n                \"name\": \"Drafter Developers Inc.\",\n                \"status\": \"active\",\n                \"ownerId\": 1\n            }\n        },\n        {\n            \"id\": 119,\n            \"organizationId\": 1,\n            \"enabled\": true,\n            \"role\": \"user\",\n            \"email\": \"dmitry.tuzenkov+invitation6@gmail.com\",\n            \"avatarUrl\": null,\n            \"firstName\": \"Dmitry\",\n            \"lastName\": \"Tuzenkov\",\n            \"googleId\": null,\n            \"facebookId\": null,\n            \"twitterId\": null,\n            \"hasEmailSub\": true,\n            \"hasVerifiedEmail\": true,\n            \"acceptedTerms\": true,\n            \"refererProvider\": null,\n            \"refererProviderCode\": null,\n            \"refererOwnCode\": null,\n            \"subscription\": {\n                \"id\": 61,\n                \"planId\": \"2\",\n                \"status\": \"active\",\n                \"credits\": 1000000,\n                \"usedCredits\": 0,\n                \"trialEndsAt\": null,\n                \"stripeId\": null,\n                \"stripe\": null\n            },\n            \"organization\": {\n                \"id\": 1,\n                \"name\": \"Drafter Developers Inc.\",\n                \"status\": \"active\",\n                \"ownerId\": 1\n            }\n        },\n        {\n            \"id\": 94,\n            \"organizationId\": 1,\n            \"enabled\": true,\n            \"role\": \"user\",\n            \"email\": \"dmitry.tuzenkov+50@gmail.com\",\n            \"avatarUrl\": null,\n            \"firstName\": \"Dmitry\",\n            \"lastName\": \"Tuzenkov\",\n            \"googleId\": null,\n            \"facebookId\": null,\n            \"twitterId\": null,\n            \"hasEmailSub\": true,\n            \"hasVerifiedEmail\": true,\n            \"acceptedTerms\": true,\n            \"refererProvider\": null,\n            \"refererProviderCode\": null,\n            \"refererOwnCode\": null,\n            \"subscription\": {\n                \"id\": 43,\n                \"planId\": \"2\",\n                \"status\": \"active\",\n                \"credits\": 1000000,\n                \"usedCredits\": 0,\n                \"trialEndsAt\": null,\n                \"stripeId\": null,\n                \"stripe\": null\n            },\n            \"organization\": {\n                \"id\": 1,\n                \"name\": \"Drafter Developers Inc.\",\n                \"status\": \"active\",\n                \"ownerId\": 1\n            }\n        },\n        {\n            \"id\": 97,\n            \"organizationId\": 1,\n            \"enabled\": false,\n            \"role\": \"user\",\n            \"email\": \"dmitry.tuzenkov+51@gmail.com\",\n            \"avatarUrl\": null,\n            \"firstName\": \"Dmitry\",\n            \"lastName\": \"Tuzenkov\",\n            \"googleId\": null,\n            \"facebookId\": null,\n            \"twitterId\": null,\n            \"hasEmailSub\": false,\n            \"hasVerifiedEmail\": false,\n            \"acceptedTerms\": true,\n            \"refererProvider\": null,\n            \"refererProviderCode\": null,\n            \"refererOwnCode\": null,\n            \"subscription\": {\n                \"id\": 44,\n                \"planId\": \"2\",\n                \"status\": \"active\",\n                \"credits\": 1000000,\n                \"usedCredits\": 0,\n                \"trialEndsAt\": null,\n                \"stripeId\": null,\n                \"stripe\": null\n            },\n            \"organization\": {\n                \"id\": 1,\n                \"name\": \"Drafter Developers Inc.\",\n                \"status\": \"active\",\n                \"ownerId\": 1\n            }\n        },\n        {\n            \"id\": 122,\n            \"organizationId\": 1,\n            \"enabled\": true,\n            \"role\": \"user\",\n            \"email\": \"dmitry.tuzenkov+invitation8@gmail.com\",\n            \"avatarUrl\": null,\n            \"firstName\": \"Invitation8\",\n            \"lastName\": \"777\",\n            \"googleId\": null,\n            \"facebookId\": null,\n            \"twitterId\": null,\n            \"hasEmailSub\": true,\n            \"hasVerifiedEmail\": true,\n            \"acceptedTerms\": true,\n            \"refererProvider\": null,\n            \"refererProviderCode\": null,\n            \"refererOwnCode\": null,\n            \"subscription\": {\n                \"id\": 64,\n                \"planId\": \"2\",\n                \"status\": \"active\",\n                \"credits\": 1000000,\n                \"usedCredits\": 0,\n                \"trialEndsAt\": null,\n                \"stripeId\": null,\n                \"stripe\": null\n            },\n            \"organization\": {\n                \"id\": 1,\n                \"name\": \"Drafter Developers Inc.\",\n                \"status\": \"active\",\n                \"ownerId\": 1\n            }\n        },\n        {\n            \"id\": 120,\n            \"organizationId\": 1,\n            \"enabled\": true,\n            \"role\": \"user\",\n            \"email\": \"dmitry.tuzenkov+invitation7@gmail.com\",\n            \"avatarUrl\": null,\n            \"firstName\": \"dmitry\",\n            \"lastName\": \"tuzenkov 7\",\n            \"googleId\": null,\n            \"facebookId\": null,\n            \"twitterId\": null,\n            \"hasEmailSub\": true,\n            \"hasVerifiedEmail\": true,\n            \"acceptedTerms\": true,\n            \"refererProvider\": null,\n            \"refererProviderCode\": null,\n            \"refererOwnCode\": null,\n            \"subscription\": {\n                \"id\": 62,\n                \"planId\": \"2\",\n                \"status\": \"active\",\n                \"credits\": 1000000,\n                \"usedCredits\": 0,\n                \"trialEndsAt\": null,\n                \"stripeId\": null,\n                \"stripe\": null\n            },\n            \"organization\": {\n                \"id\": 1,\n                \"name\": \"Drafter Developers Inc.\",\n                \"status\": \"active\",\n                \"ownerId\": 1\n            }\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get user by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/users/1",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get user by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/users/1",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"users",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Allow",
+									"value": "GET,POST,PATCH,PUT,DELETE"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "784"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"310-6YAurvn4KUmQ5IrLQ5r8hOnG89I\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Feb 2022 10:38:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"organizationId\": 1,\n    \"enabled\": true,\n    \"role\": \"owner\",\n    \"email\": \"owner@new.drafter.ai\",\n    \"avatarUrl\": null,\n    \"firstName\": \"Oleg\",\n    \"lastName\": \"Voronko\",\n    \"googleId\": null,\n    \"facebookId\": null,\n    \"twitterId\": null,\n    \"hasEmailSub\": true,\n    \"hasVerifiedEmail\": true,\n    \"acceptedTerms\": true,\n    \"refererProvider\": null,\n    \"refererProviderCode\": null,\n    \"refererOwnCode\": null,\n    \"subscription\": {\n        \"id\": 1,\n        \"planId\": \"2\",\n        \"status\": \"active\",\n        \"credits\": 1000000,\n        \"usedCredits\": 327051,\n        \"trialEndsAt\": null,\n        \"stripeId\": \"cus_KkMxk40DlDxi0m\",\n        \"stripe\": {\n            \"subscription\": \"sub_1K4sDHEBSGAEGWrHNIgRxddY\",\n            \"subscription_item\": \"si_KkMxT2vMgYddv6\",\n            \"priceId\": \"price_1J8nEbEBSGAEGWrHvjTEB1L4\",\n            \"productId\": \"prod_JmLwGBZbrM1h12\"\n        }\n    },\n    \"organization\": {\n        \"id\": 1,\n        \"name\": \"Drafter Developers Inc.\",\n        \"status\": \"active\",\n        \"ownerId\": 1\n    },\n    \"refUrl\": \"/refferals?rpro=drafter&rcode=null\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "in",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "{{API_KEY}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "X-Access-Key",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

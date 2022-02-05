@@ -25,7 +25,8 @@
     "optimize": "rm **/*.map **/*development.js",
     "prepare": "npm run build",
     "size": "size-limit",
-    "analyze": "size-limit --why"
+    "analyze": "size-limit --why",
+    "convert-api": "p2o docs/public-rest-api.postman.json -f ./docs/public.yml -o ./docs/options.json"
   },
   "peerDependencies": {},
   "husky": {
@@ -64,6 +65,7 @@
     "size-limit": "^6.0.3",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
-    "typescript": "^3.9.10"
+    "typescript": "^3.9.10",
+    "postman-to-openapi": "^2.1.0"
   }
 }

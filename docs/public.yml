@@ -1,0 +1,2973 @@
+openapi: 3.0.0
+info:
+  title: Drafter AI - Public Rest API
+  description: >-
+    # API Reference
+
+
+    The Drafter API is organized around
+    [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer). Our
+    API has predictable resource-oriented URLs, accepts
+    [form-encoded](https://en.wikipedia.org/wiki/POST_(HTTP)#Use_for_submitting_web_forms)
+    request bodies, returns [JSON-encoded](http://www.json.org/) responses, and
+    uses standard HTTP response codes, authentication, and verbs.
+
+
+    You can use the Stripe API in test mode, which does not affect your live
+    data or interact with the banking networks. The API key you use to
+    authenticate the request determines whether the request is live mode or test
+    mode.
+
+
+    # Authentication
+
+
+    The Stripe API uses [API keys](https://stripe.com/docs/keys) to authenticate
+    requests. You can view and manage your API keys in the [Drafter AI Setting >
+    Access Key Management](https://app.drafter.ai/settings).
+
+
+    Test mode secret keys have the prefix `test_` and live mode secret keys have
+    the prefix `prod_`.
+
+
+    Your API keys carry many privileges, so be sure to keep them secure! Do not
+    share your secret API keys in publicly accessible areas such as GitHub,
+    client-side code, and so forth.
+
+
+    Authentication to the API is performed via [HTTP Basic
+    Auth](http://en.wikipedia.org/wiki/Basic_access_authentication). Provide
+    your API key as the basic auth username value. You do not need to provide a
+    password.
+
+
+    If you need to authenticate via bearer auth (e.g., for a cross-origin
+    request), use `-H "X-Access-Key: test_4eC39HqL/1.yjWDarjtT1zdp7dc"`
+
+
+    All API requests must be made over
+    [HTTPS](http://en.wikipedia.org/wiki/HTTP_Secure). Calls made over plain
+    HTTP will fail. API requests without authentication will also fail.
+
+
+    # Javascript SDK example
+
+
+    ``` javascript
+
+    // example.js
+
+    import fetch from 'node-fetch'
+
+    import {
+      initialize,
+      WORKFLOW_EXAMPLE,
+      WORKFLOW_EXECUTION_EXAMPLE,
+    } from '@phonal-technologies/drafterai-js'
+
+    // Init an API with apikey and fetch provider
+
+    const accessKey = process.env.DRAFTER_ACCESS_KEY
+
+    const drafterApi = initialize(accessKey, { fetch })
+
+
+    ```
+
+
+    To get more information about SDK check public resources:
+
+
+    *   NPM package
+    [@phonal-technologies/drafterai-js](https://www.npmjs.com/package/@phonal-technologies/drafterai-js)
+
+    *   Github repo
+    [phonal-technologies/drafter-js](https://github.com/phonal-technologies/drafter-js)
+  version: 1.0.0
+  x-logo:
+    url: https://api.drafter.ai/logo.png
+    backgroundColor: ''
+    altText: Drafter AI
+servers:
+  - url: http://{{api_url}}
+components:
+  securitySchemes:
+    apikeyAuth:
+      type: http
+      scheme: apikey
+security:
+  - apikeyAuth: []
+tags:
+  - name: Workflows
+    description: TBD
+  - name: Workflow Executions
+  - name: Users
+paths:
+  /workflows:
+    get:
+      tags:
+        - Workflows
+      summary: Get workflows list
+      description: |-
+        ``` javascript
+        import fetch from 'node-fetch'
+        import {
+          initialize,
+          WORKFLOW_EXAMPLE,
+          WORKFLOW_EXECUTION_EXAMPLE,
+        } from '@phonal-technologies/drafterai-js'
+        // Init an API with apikey and fetch provider
+        const accessKey = process.env.DRAFTER_ACCESS_KEY
+        const drafterApi = initialize(accessKey, {
+          fetch,
+        })
+        ;(async () => {
+          console.log('WORKFLOW_EXAMPLE', WORKFLOW_EXAMPLE)
+          const workflows = await drafterApi.workflows.find(
+            { $limit: 10, '$sort[id]': -1 },
+            { all: true }
+          )
+
+          console.log('First 10 workflows', workflows)
+        })
+
+        ```
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-DNS-Prefetch-Control:
+              schema:
+                type: string
+                example: 'off'
+            Expect-CT:
+              schema:
+                type: string
+                example: max-age=0
+            X-Frame-Options:
+              schema:
+                type: string
+                example: SAMEORIGIN
+            Strict-Transport-Security:
+              schema:
+                type: string
+                example: max-age=15552000; includeSubDomains
+            X-Download-Options:
+              schema:
+                type: string
+                example: noopen
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            X-Permitted-Cross-Domain-Policies:
+              schema:
+                type: string
+                example: none
+            Referrer-Policy:
+              schema:
+                type: string
+                example: no-referrer
+            X-XSS-Protection:
+              schema:
+                type: integer
+                example: '0'
+            Vary:
+              schema:
+                type: string
+                example: Origin, Accept, Accept-Encoding
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: 'true'
+            Allow:
+              schema:
+                type: string
+                example: GET,POST,PATCH,PUT,DELETE
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            ETag:
+              schema:
+                type: string
+                example: W/"1502-MKYj1drlsr6dp3V50cJT5lFy+v4"
+            Content-Encoding:
+              schema:
+                type: string
+                example: gzip
+            Date:
+              schema:
+                type: string
+                example: Sat, 05 Feb 2022 10:30:58 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                total: 6
+                limit: 10
+                skip: 0
+                data:
+                  - id: 110
+                    organizationId: 1
+                    userId: 112
+                    name: Write a Product Pitch Workflow
+                    status: published
+                    description: Write a Product Pitch Workflow
+                    iconUrl: >-
+                      https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflows/110/icon_75573f9e-94e5-41cd-a568-78e6cb08e660.png
+                    firstStepId: null
+                    createdAt: '2021-12-09T11:27:48.562Z'
+                    updatedAt: '2022-01-25T12:16:30.586Z'
+                    steps:
+                      - id: 590
+                        datasourceId: null
+                        nextId: 621
+                        name: Form / Manual
+                        action: src=form_manual
+                        type: source
+                      - id: 621
+                        datasourceId: null
+                        nextId: null
+                        name: Define Hashtags
+                        action: cmd=generate_text;ver=1.0.0;type=text%2Fhashtags
+                        type: action
+                    datasources: []
+                  - id: 119
+                    organizationId: 1
+                    userId: 1
+                    name: TEST WORKFLOWDWDW
+                    status: published
+                    description: d2d2de
+                    iconUrl: >-
+                      https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflows/119/icon_default_workflow_sm_icon.png
+                    firstStepId: null
+                    createdAt: '2022-01-31T10:01:03.396Z'
+                    updatedAt: '2022-02-02T19:22:31.455Z'
+                    steps:
+                      - id: 638
+                        datasourceId: 44
+                        nextId: 639
+                        name: Form / Manual
+                        action: src=form_manual
+                        type: source
+                      - id: 639
+                        datasourceId: null
+                        nextId: null
+                        name: Get URL Data
+                        action: cmd=scrape_url_data;ver=1.0.0
+                        type: action
+                    datasources:
+                      - id: 44
+                        type: manual
+                        url: null
+                        attributes:
+                          websiteUrl: url
+                  - id: 113
+                    organizationId: 1
+                    userId: 3
+                    name: New v15
+                    status: published
+                    description: Test v15
+                    iconUrl: >-
+                      https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflows/113/icon_4a809379-bf60-44df-9267-25be5ffe4e3c.png
+                    firstStepId: null
+                    createdAt: '2022-01-11T19:40:20.705Z'
+                    updatedAt: '2022-01-25T12:16:16.371Z'
+                    steps:
+                      - id: 566
+                        datasourceId: 22
+                        nextId: 551
+                        name: Dataset
+                        action: src=csv_ds
+                        type: source
+                      - id: 551
+                        datasourceId: null
+                        nextId: 552
+                        name: Get URL Data
+                        action: cmd=scrape_url_data;ver=1.0.0
+                        type: action
+                      - id: 552
+                        datasourceId: null
+                        nextId: null
+                        name: Write a Product Pitch
+                        action: cmd=generate_text;ver=1.0.0;type=ads%2Fpitch_s
+                        type: action
+                    datasources:
+                      - id: 22
+                        type: csv_ds
+                        url: >-
+                          https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflow-datasources/22/dsrc_10456217-1d65-4099-b943-e58f2e2f548a.csv
+                        attributes:
+                          websiteUrl: url
+                  - id: 115
+                    organizationId: 1
+                    userId: 3
+                    name: 🛒 eCommerce Dataset Enrichment
+                    status: draft
+                    description: To demonstrate dataset possibilities for eCommerce
+                    iconUrl: >-
+                      https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflows/115/icon_5fe32864-91f7-4ae3-968a-745f7ee03c56.png
+                    firstStepId: null
+                    createdAt: '2022-01-24T13:08:56.321Z'
+                    updatedAt: '2022-01-25T12:15:49.367Z'
+                    steps:
+                      - id: 622
+                        datasourceId: null
+                        nextId: 623
+                        name: Convert a product title into description for eCommerce
+                        action: cmd=generate_text;ver=1.0.0;type=ecomm%2Fproduct
+                        type: action
+                      - id: 623
+                        datasourceId: null
+                        nextId: null
+                        name: Define eCommerce Categories
+                        action: cmd=generate_text;ver=1.0.0;type=ecomm%2Fcategory
+                        type: action
+                      - id: 588
+                        datasourceId: 26
+                        nextId: 622
+                        name: 🛒 List of Products x5
+                        action: src=csv_ds
+                        type: source
+                    datasources:
+                      - id: 26
+                        type: csv_ds
+                        url: >-
+                          https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflow-datasources/26/dsrc_c20dc0b6-a9bf-4eaa-891d-a9433fd7b3d3.csv
+                        attributes:
+                          productName: string
+                  - id: 114
+                    organizationId: 1
+                    userId: 1
+                    name: Dataset Workflow
+                    status: draft
+                    description: Sample
+                    iconUrl: >-
+                      https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflows/114/icon_2eddd70e-f372-4546-a12e-6223067fc740.png
+                    firstStepId: null
+                    createdAt: '2022-01-18T19:45:08.596Z'
+                    updatedAt: '2022-01-25T12:16:01.877Z'
+                    steps:
+                      - id: 570
+                        datasourceId: 24
+                        nextId: 571
+                        name: Dataset
+                        action: src=csv_ds
+                        type: source
+                      - id: 571
+                        datasourceId: null
+                        nextId: 572
+                        name: Get URL Data
+                        action: cmd=scrape_url_data;ver=1.0.0
+                        type: action
+                      - id: 572
+                        datasourceId: null
+                        nextId: null
+                        name: Compose Tweet
+                        action: cmd=generate_text;ver=1.0.0;type=twitter%2Ftweet
+                        type: action
+                    datasources:
+                      - id: 24
+                        type: csv_ds
+                        url: >-
+                          https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflow-datasources/24/dsrc_aa59ca97-595d-421e-90e0-c78a2f021d99.csv
+                        attributes:
+                          URL: url
+                          Language: string
+                          Country: string
+                  - id: 116
+                    organizationId: 1
+                    userId: 3
+                    name: Dataset Test x2
+                    status: draft
+                    description: Test
+                    iconUrl: >-
+                      https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflows/116/icon_2d0f2286-f340-4ae1-be82-ccd34149804a.png
+                    firstStepId: null
+                    createdAt: '2022-01-25T10:57:03.700Z'
+                    updatedAt: '2022-01-25T10:57:03.700Z'
+                    steps:
+                      - id: 645
+                        datasourceId: 47
+                        nextId: 646
+                        name: Dataset
+                        action: src=csv_ds
+                        type: source
+                      - id: 646
+                        datasourceId: null
+                        nextId: null
+                        name: Write a Product Pitch
+                        action: cmd=generate_text;ver=1.0.0;type=ads%2Fpitch_s
+                        type: action
+                    datasources:
+                      - id: 47
+                        type: csv_ds
+                        url: >-
+                          https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflow-datasources/47/dsrc_1aee2a39-8d40-4816-a2bd-b304a2f93ac8.csv
+                        attributes:
+                          id: string
+                          productName: string
+  /workflows/110:
+    get:
+      tags:
+        - Workflows
+      summary: Get workflow by id
+      description: |-
+        ``` javascript
+        import fetch from 'node-fetch'
+        import {
+          initialize,
+          WORKFLOW_EXAMPLE,
+          WORKFLOW_EXECUTION_EXAMPLE,
+        } from '@phonal-technologies/drafterai-js'
+        // Init an API with apikey and fetch provider
+        const accessKey = process.env.DRAFTER_ACCESS_KEY
+        const drafterApi = initialize(accessKey, {
+          fetch,
+        })
+        ;(async () => {
+          console.log('WORKFLOW_EXAMPLE', WORKFLOW_EXAMPLE)
+          const workflow = await drafterApi.workflows.get(110)
+
+          console.log('Workflow with id 110', workflow)
+        })
+
+        ```
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-DNS-Prefetch-Control:
+              schema:
+                type: string
+                example: 'off'
+            Expect-CT:
+              schema:
+                type: string
+                example: max-age=0
+            X-Frame-Options:
+              schema:
+                type: string
+                example: SAMEORIGIN
+            Strict-Transport-Security:
+              schema:
+                type: string
+                example: max-age=15552000; includeSubDomains
+            X-Download-Options:
+              schema:
+                type: string
+                example: noopen
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            X-Permitted-Cross-Domain-Policies:
+              schema:
+                type: string
+                example: none
+            Referrer-Policy:
+              schema:
+                type: string
+                example: no-referrer
+            X-XSS-Protection:
+              schema:
+                type: integer
+                example: '0'
+            Vary:
+              schema:
+                type: string
+                example: Origin, Accept, Accept-Encoding
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: 'true'
+            Allow:
+              schema:
+                type: string
+                example: GET,POST,PATCH,PUT,DELETE
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '685'
+            ETag:
+              schema:
+                type: string
+                example: W/"2ad-Rc1R3YPpxdpeug07cOLHvmVHZCc"
+            Date:
+              schema:
+                type: string
+                example: Sat, 05 Feb 2022 10:31:42 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                id: 110
+                organizationId: 1
+                userId: 112
+                name: Write a Product Pitch Workflow
+                status: published
+                description: Write a Product Pitch Workflow
+                iconUrl: >-
+                  https://dev-drafter-ai-api.s3.eu-central-1.amazonaws.com/aws-dev-webapp.drafter.ai/workflows/110/icon_75573f9e-94e5-41cd-a568-78e6cb08e660.png
+                firstStepId: null
+                createdAt: '2021-12-09T11:27:48.562Z'
+                updatedAt: '2022-01-25T12:16:30.586Z'
+                steps:
+                  - id: 590
+                    datasourceId: null
+                    nextId: 621
+                    name: Form / Manual
+                    action: src=form_manual
+                    type: source
+                  - id: 621
+                    datasourceId: null
+                    nextId: null
+                    name: Define Hashtags
+                    action: cmd=generate_text;ver=1.0.0;type=text%2Fhashtags
+                    type: action
+                datasources: []
+  /workflow-executions/:
+    get:
+      tags:
+        - Workflow Executions
+      summary: Get workflow executions list
+      description: |-
+        ``` javascript
+        import fetch from 'node-fetch'
+        import {
+          initialize,
+          WORKFLOW_EXAMPLE,
+          WORKFLOW_EXECUTION_EXAMPLE,
+        } from '@phonal-technologies/drafterai-js'
+        // Init an API with apikey and fetch provider
+        const accessKey = process.env.DRAFTER_ACCESS_KEY
+        const drafterApi = initialize(accessKey, {
+          fetch,
+        })
+        ;(async () => {
+          console.log('Workflow execution example', WORKFLOW_EXECUTION_EXAMPLE)
+          const wfExecutions = await drafterApi.workflowExecutions.find(
+            { $limit: 10, '$sort[id]': -1 },
+            { all: true }
+          )
+
+          console.log('First 10 workflow executions', wfExecutions)
+        })
+
+        ```
+      parameters:
+        - name: workflowId
+          in: query
+          schema:
+            type: integer
+          example: '110'
+        - name: $sort[id]
+          in: query
+          schema:
+            type: string
+          example: '-1'
+        - name: $limit
+          in: query
+          schema:
+            type: integer
+          example: '50'
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-DNS-Prefetch-Control:
+              schema:
+                type: string
+                example: 'off'
+            Expect-CT:
+              schema:
+                type: string
+                example: max-age=0
+            X-Frame-Options:
+              schema:
+                type: string
+                example: SAMEORIGIN
+            Strict-Transport-Security:
+              schema:
+                type: string
+                example: max-age=15552000; includeSubDomains
+            X-Download-Options:
+              schema:
+                type: string
+                example: noopen
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            X-Permitted-Cross-Domain-Policies:
+              schema:
+                type: string
+                example: none
+            Referrer-Policy:
+              schema:
+                type: string
+                example: no-referrer
+            X-XSS-Protection:
+              schema:
+                type: integer
+                example: '0'
+            Vary:
+              schema:
+                type: string
+                example: Origin, Accept, Accept-Encoding
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: 'true'
+            Allow:
+              schema:
+                type: string
+                example: GET,POST,PATCH,PUT,DELETE
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            ETag:
+              schema:
+                type: string
+                example: W/"b52c-mZErMMzH//lpOaYLAFLjUpGXHuM"
+            Content-Encoding:
+              schema:
+                type: string
+                example: gzip
+            Date:
+              schema:
+                type: string
+                example: Sat, 05 Feb 2022 10:32:49 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                total: 58
+                limit: 50
+                skip: 0
+                data:
+                  - id: 4924
+                    context:
+                      redditTopic: Suggest eCommerce Product Info
+                    pipeline:
+                      - redditTopic: Suggest eCommerce Product Info
+                        textHashtags: '#ecommerce #product'
+                    status: completed
+                    datagroup: 38d1c1a4-fabc-45a1-b0c7-ef2d3e57791a
+                    errors: []
+                    createdAt: '2022-02-03T15:52:56.943Z'
+                    updatedAt: '2022-02-03T15:53:02.176Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 4467
+                    context:
+                      redditTopic: Suggest eCommerce Product Info
+                    pipeline:
+                      - redditTopic: Suggest eCommerce Product Info
+                        textHashtags: ''
+                    status: completed
+                    datagroup: 1d5b2e28-e2e7-4831-a9d0-28b81bb14532
+                    errors: []
+                    createdAt: '2022-01-31T15:52:14.351Z'
+                    updatedAt: '2022-01-31T15:52:17.376Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 4466
+                    context:
+                      redditTopic: topic reddit
+                    pipeline:
+                      - redditTopic: topic reddit
+                        textHashtags: '#reddit'
+                    status: completed
+                    datagroup: f9272442-4efa-44e0-8a85-f34148b96431
+                    errors: []
+                    createdAt: '2022-01-31T15:47:50.861Z'
+                    updatedAt: '2022-01-31T15:47:54.888Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 4465
+                    context:
+                      redditTopic: test topic
+                    pipeline:
+                      - redditTopic: test topic
+                        textHashtags: ''
+                    status: completed
+                    datagroup: 0ce17b4c-7de8-4f49-9787-e0a4761a61fc
+                    errors: []
+                    createdAt: '2022-01-31T15:45:38.652Z'
+                    updatedAt: '2022-01-31T15:45:43.333Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 4459
+                    context:
+                      redditTopic: How to generate ads texts in bulk?
+                    pipeline:
+                      - redditTopic: How to generate ads texts in bulk?
+                        textHashtags: '#ads #texts'
+                    status: completed
+                    datagroup: 5fbae51f-e304-45a1-ba92-e810e9855def
+                    errors: []
+                    createdAt: '2022-01-31T15:06:53.260Z'
+                    updatedAt: '2022-01-31T15:06:56.403Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 2681
+                    context:
+                      redditTopic: >-
+                        Choosing an E-commerce platform for your Dropshipping
+                        Business
+                    pipeline:
+                      - redditTopic: >-
+                          Choosing an E-commerce platform for your Dropshipping
+                          Business
+                        textLabels: Does your Dropshipping business need a website?
+                    status: completed
+                    datagroup: b9062cc2-9e0a-4d83-a8ea-32d3ba191a0f
+                    errors: []
+                    createdAt: '2022-01-28T09:15:07.016Z'
+                    updatedAt: '2022-01-28T09:15:09.746Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 2680
+                    context:
+                      redditTopic: >-
+                        Choosing an E-commerce platform for your Dropshipping
+                        Business
+                    pipeline:
+                      - redditTopic: >-
+                          Choosing an E-commerce platform for your Dropshipping
+                          Business
+                        textType: Product Pitch
+                        textEntity: |-
+                          - Dropshipping [SECTOR]
+                          - E-commerce [SECTOR]
+                          - Business [SECTOR]
+                          - Platform [SECTOR]
+                          - Dropshipping Business [SECTOR]
+                        textKeywords: dropshipping, business, e-commerce
+                    status: completed
+                    datagroup: 013a29b7-b02a-483a-9111-e1261a14b089
+                    errors: []
+                    createdAt: '2022-01-28T09:13:46.604Z'
+                    updatedAt: '2022-01-28T09:13:52.758Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 2679
+                    context:
+                      redditTopic: >-
+                        Choosing an E-commerce platform for your Dropshipping
+                        Business
+                    pipeline:
+                      - redditTopic: >-
+                          Choosing an E-commerce platform for your Dropshipping
+                          Business
+                        urlCategory: E-Commerce
+                    status: completed
+                    datagroup: b524bc01-6453-443c-9258-10ba923e92a6
+                    errors: []
+                    createdAt: '2022-01-28T09:12:41.584Z'
+                    updatedAt: '2022-01-28T09:12:45.330Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 2678
+                    context:
+                      redditTopic: 'Mod Poll: Best Website Platform / CMS for Dropshipping'
+                    pipeline:
+                      - redditTopic: 'Mod Poll: Best Website Platform / CMS for Dropshipping'
+                        urlCategory: Software Development
+                    status: completed
+                    datagroup: 0cfafa1a-5174-4b0b-9ae2-bdea9881a32e
+                    errors: []
+                    createdAt: '2022-01-28T09:04:50.784Z'
+                    updatedAt: '2022-01-28T09:04:55.814Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 1493
+                    context:
+                      productTitle: 'A product title '
+                    pipeline:
+                      - productTitle: 'A product title '
+                        urlCategory: Product Title
+                        adsFeatures: ✅
+                        textStory: >-
+                          Mildred's life was perfect. She had a great job, a
+                          loving husband and a beautiful daughter. So when her
+                          husband proposed a cross country move for a better
+                          job, she was really excited. She loved being a stay at
+                          home mom and she knew that her daughter would have a
+                          better life in California. They got there and she was
+                          right, she loved being able to take her daughter to
+                          the park and go to the beach. They were able to buy a
+                          bigger house and their daughter could really spread
+                          her wings. She loved being there so much that she
+                          didn't notice the distance from family until it was
+                          too late. Her mom got sick back home and she had to
+                          leave her daughter for weeks to take care of her. Her
+                          daughter missed her terribly but they did their best
+                          to make it work. One day while she was taking care of
+                          her mom, she sent a final text message to her husband
+                          saying "I can't do this anymore." When he asked what
+                          happened she told him everything. He was mad but he
+                          decided that they were going back home because he
+                          wanted them together. And so they did, they moved back
+                          home where they had always been happy and learned how
+                          to work together again.
+                    status: completed
+                    datagroup: 9e2880e1-39f0-4384-823d-501767a003d0
+                    errors: []
+                    createdAt: '2022-01-26T08:23:15.271Z'
+                    updatedAt: '2022-01-26T08:23:36.609Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 1470
+                    context:
+                      productTitle: >-
+                        Alienware M15 R6 Gaming Laptop, 15.6 inch QHD 240Hz
+                        Display, Intel Core i7-11800H, 32GB DDR4 RAM, 1TB SSD,
+                        NVIDIA GeForce RTX 3080 8GB GDDR6, Windows 11 Home, Dark
+                        Side of The Moon (Latest Model)
+                    pipeline:
+                      - productTitle: >-
+                          Alienware M15 R6 Gaming Laptop, 15.6 inch QHD 240Hz
+                          Display, Intel Core i7-11800H, 32GB DDR4 RAM, 1TB SSD,
+                          NVIDIA GeForce RTX 3080 8GB GDDR6, Windows 11 Home,
+                          Dark Side of The Moon (Latest Model)
+                        urlCategory: Gaming Laptop
+                        adsFeatures: >-
+                          ✅ High quality IPS display
+
+                          ✅ NVIDIA GeForce RTX graphics card
+
+                          ✅ Customizable in over a dozen different color
+                          combinations
+
+                          ✅ Latest QHD panel with 240Hz refresh rate
+                        textStory: >-
+                          "Dad," the gamer said. "I really need a new gaming
+                          laptop."
+
+
+                          "Sweetheart," the dad replied. "We'll get you a new
+                          one after your birthday."
+
+
+                          The gamer looked up from his game and sighed. 
+                    status: completed
+                    datagroup: 2c87e729-a2bc-4855-9f31-122c4defa79b
+                    errors: []
+                    createdAt: '2022-01-24T15:12:34.747Z'
+                    updatedAt: '2022-01-24T15:12:43.027Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 1469
+                    context:
+                      productTitle: >-
+                        Alienware M15 R6 Gaming Laptop, 15.6 inch QHD 240Hz
+                        Display, Intel Core i7-11800H, 32GB DDR4 RAM, 1TB SSD,
+                        NVIDIA GeForce RTX 3080 8GB GDDR6, Windows 11 Home, Dark
+                        Side of The Moon (Latest Model)
+                    pipeline:
+                      - productTitle: >-
+                          Alienware M15 R6 Gaming Laptop, 15.6 inch QHD 240Hz
+                          Display, Intel Core i7-11800H, 32GB DDR4 RAM, 1TB SSD,
+                          NVIDIA GeForce RTX 3080 8GB GDDR6, Windows 11 Home,
+                          Dark Side of The Moon (Latest Model)
+                        urlCategory: Gaming Laptop
+                        adsPitchS: >-
+                          If you're looking for the perfect laptop to give your
+                          life an edge, then you're in luck. The 15 inch
+                          Alienware M15 R6 Gaming Laptop has a QHD 240Hz Display
+                          and Windows 11 Home System. Plus it has liquid cooling
+                          and liquid diffusion for all those liquid-based
+                          battles you can't wait to take on.
+                        adsFeatures: |-
+                          ✅ Latest model
+                          ✅ 15.6 inch, QHD 240Hz Display
+                          ✅ Windows 11 Home
+                          ✅ Intel Core i7-11800H
+                          ✅ NVIDIA GeForce RTX 3080 8GB GDDR6
+                          ✅ 32GB DDR4 RAM
+                          ✅ 1TB SSD
+                        textKeywords: laptop, gaming, liquid cooling, liquid diffusion
+                        textStory: >-
+                          It was a dark and stormy night. It felt as if the
+                          world had gone mad amidst the ever-present lightning
+                          and thunder. Suddenly, a flash of lightning revealed a
+                          woman who was waiting for a bus on a street corner.
+                          The rain was pouring down hard, but the woman didn't
+                          seem to be bothered by it at all. She just went on
+                          waiting for her ride patiently. It wasn't long before
+                          a bus pulled up and the woman stepped inside. The door
+                          had barely closed when the door opened again and
+                          another person came in, dripping wet from head to toe,
+                          with two bags of groceries in tow. With no room left
+                          inside the bus, the driver gestured to the woman with
+                          his hand as if to say "you missed your stop" whereupon
+                          she got up and slipped out of the vehicle with an
+                          apologetic smile on her face.
+                    status: completed
+                    datagroup: 47cc095e-9dab-4a5c-98f2-15ef3b3e95f1
+                    errors: []
+                    createdAt: '2022-01-24T15:10:57.491Z'
+                    updatedAt: '2022-01-24T15:11:18.527Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 1468
+                    context:
+                      productTitle: >-
+                        Alienware M15 R6 Gaming Laptop, 15.6 inch QHD 240Hz
+                        Display, Intel Core i7-11800H, 32GB DDR4 RAM, 1TB SSD,
+                        NVIDIA GeForce RTX 3080 8GB GDDR6, Windows 11 Home, Dark
+                        Side of The Moon (Latest Model)
+                    pipeline:
+                      - productTitle: >-
+                          Alienware M15 R6 Gaming Laptop, 15.6 inch QHD 240Hz
+                          Display, Intel Core i7-11800H, 32GB DDR4 RAM, 1TB SSD,
+                          NVIDIA GeForce RTX 3080 8GB GDDR6, Windows 11 Home,
+                          Dark Side of The Moon (Latest Model)
+                        urlCategory: Gaming Laptop
+                        adsPitchS: >-
+                          The Alienware M15 R6 offers the latest technology with
+                          a 15.6 inch QHD 240Hz display and Windows 11 Home.
+                          This model has Intel Core i7-11800H and NVIDIA GeForce
+                          RTX 3080 8GB GDDR6.
+                        adsFeatures: |-
+                          ✅ 15.6 inch QHD 240Hz Display
+                          ✅ Intel Core i7-11800H
+                          ✅ 32GB DDR4 RAM
+                          ✅ 1TB SSD
+                          ✅ NVIDIA GeForce RTX 3080 8GB GDDR6
+                        textKeywords: Alienware, Windows 11, Home
+                    status: completed
+                    datagroup: 8e71a8d6-59ee-4ac6-9712-2139fa3576c0
+                    errors: []
+                    createdAt: '2022-01-24T15:08:05.375Z'
+                    updatedAt: '2022-01-24T15:08:16.901Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 1467
+                    context:
+                      productTitle: >-
+                        Alienware M15 R6 Gaming Laptop, 15.6 inch QHD 240Hz
+                        Display, Intel Core i7-11800H, 32GB DDR4 RAM, 1TB SSD,
+                        NVIDIA GeForce RTX 3080 8GB GDDR6, Windows 11 Home, Dark
+                        Side of The Moon (Latest Model)
+                    pipeline:
+                      - productTitle: >-
+                          Alienware M15 R6 Gaming Laptop, 15.6 inch QHD 240Hz
+                          Display, Intel Core i7-11800H, 32GB DDR4 RAM, 1TB SSD,
+                          NVIDIA GeForce RTX 3080 8GB GDDR6, Windows 11 Home,
+                          Dark Side of The Moon (Latest Model)
+                        urlCategory: Gaming Laptop
+                        adsPitchS: >-
+                          Alienware is a high-end laptop that maximizes your
+                          gaming experience. With a 240Hz display, a sleek
+                          design and a robust frame, it's the perfect choice for
+                          a competitive gamer.
+                        adsFeatures: |-
+                          ✅ 15.6 QHD 240Hz display
+                          ✅ Intel Core i7-11800H
+                          ✅ 32GB DDR4 RAM
+                          ✅ NVIDIA GeForce RTX 3080 8GB GDDR6
+                    status: completed
+                    datagroup: 93c4aab7-e236-4714-bba3-328c35c1db23
+                    errors: []
+                    createdAt: '2022-01-24T14:56:49.825Z'
+                    updatedAt: '2022-01-24T14:57:02.973Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 1429
+                    context:
+                      productTitle: >-
+                        Sceptre 27-Inch FHD LED Gaming Monitor 75Hz 2X HDMI VGA
+                        Build-in
+                    pipeline:
+                      - productTitle: >-
+                          Sceptre 27-Inch FHD LED Gaming Monitor 75Hz 2X HDMI
+                          VGA Build-in
+                        urlCategory: Computer Monitors
+                        adsPitchS: >-
+                          Sceptre takes your gaming to the next level with their
+                          27-inch FHD LED monitor. The 75hz refresh rate (2x
+                          faster than typical electronics) and 3-watt speakers
+                          ensure a clean, realistic gameplay.
+                        adsFeatures: |-
+                          ✅ 75Hz Refresh Rate
+                          ✅ 2X HDMIs
+                          ✅ VGA Input for PC
+                          ✅ Full HD Resolution
+                    status: completed
+                    datagroup: 605b5701-7752-4355-a024-dd58ca098f1a
+                    errors: []
+                    createdAt: '2022-01-24T12:50:02.106Z'
+                    updatedAt: '2022-01-24T12:50:10.699Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 1428
+                    context:
+                      productTitle: >-
+                        SAMSUNG 980 SSD 1TB M.2 NVMe Interface Internal Solid
+                        State Drive
+                    pipeline:
+                      - productTitle: >-
+                          SAMSUNG 980 SSD 1TB M.2 NVMe Interface Internal Solid
+                          State Drive
+                        urlCategory: Storage Devices
+                        adsPitchS: >-
+                          Samsung SSDs boast a storage capacity of 1TB and an
+                          NVME interface.
+
+                          Superior performance means it's perfect for gamers,
+                          creative professionals, data centers and more.
+                        adsFeatures: |-
+                          ✅ Blazing fast
+                          ✅ Delivers 2.4x more performance than a SATA SSD
+                          ✅ Includes a limited lifetime warranty
+                          ✅ 10 year limited warranty
+                    status: completed
+                    datagroup: da651b2f-33a6-4cd7-b0ef-c37d38d4650a
+                    errors: []
+                    createdAt: '2022-01-24T12:47:56.660Z'
+                    updatedAt: '2022-01-24T12:48:04.030Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 1427
+                    context:
+                      productTitle: >-
+                        SAMSUNG 980 SSD 1TB M.2 NVMe Interface Internal Solid
+                        State Drive
+                    pipeline:
+                      - productTitle: >-
+                          SAMSUNG 980 SSD 1TB M.2 NVMe Interface Internal Solid
+                          State Drive
+                        urlCategory: Storage Devices
+                        adsQuestionS: >-
+                          I'm currently out of space on my computer. Does this
+                          SSD have enough capacity to take off some of the
+                          weight?
+                        adsTagline: The next level in SSD performance
+                        googleAdsBody: The next level in SSD performance.
+                    status: completed
+                    datagroup: 46f4d503-c132-49c6-8e41-54503be3d0f6
+                    errors: []
+                    createdAt: '2022-01-24T12:45:28.932Z'
+                    updatedAt: '2022-01-24T12:45:36.599Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 1426
+                    context:
+                      websiteUrl: ''
+                      productTitle: >-
+                        SAMSUNG 980 SSD 1TB M.2 NVMe Interface Internal Solid
+                        State Drive
+                    pipeline:
+                      - websiteUrl: ''
+                        productTitle: >-
+                          SAMSUNG 980 SSD 1TB M.2 NVMe Interface Internal Solid
+                          State Drive
+                        urlCategory: Storage Devices
+                        adsPitchS: >-
+                          The SAMSUNG 980 SSD 1TB provides speed, stability and
+                          light-weight.
+                    status: completed
+                    datagroup: a19ee2f0-13f1-4fde-b6ef-fd8871ede629
+                    errors: []
+                    createdAt: '2022-01-24T12:43:14.779Z'
+                    updatedAt: '2022-01-24T12:43:20.787Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 1246
+                    context:
+                      websiteUrl: https://drafter.ai
+                    pipeline:
+                      - websiteUrl: https://drafter.ai
+                        urlTitle: '⚡ Drafter AI: Build AI Features in Days'
+                        urlDescription: >-
+                          Build, test, use and integrate AI without a line of
+                          code. Drafter AI - a no-code platform with 100+ data
+                          sources and ML models that work together.
+                        urlType: website
+                        urlImage: >-
+                          https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png
+                        urlFavicon: >-
+                          https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/
+                        adsPitchS: >-
+                          Drafter AI is a no-code platform with 100+ data
+                          sources and ML models. It allows anyone to build,
+                          test, use, and integrate AI without writing a single
+                          line of code.
+                        adsTagline: Build AI without code
+                    status: completed
+                    datagroup: c38d681a-35bb-4b20-b499-203034c45b04
+                    errors: []
+                    createdAt: '2022-01-21T09:17:02.479Z'
+                    updatedAt: '2022-01-21T09:17:16.505Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 1245
+                    context:
+                      websiteUrl: >-
+                        https://www.amazon.com/Seagate-Portable-External-Hard-Drive/dp/B07CRG94G3/ref=lp_16225007011_1_2
+                    pipeline:
+                      - websiteUrl: >-
+                          https://www.amazon.com/Seagate-Portable-External-Hard-Drive/dp/B07CRG94G3/ref=lp_16225007011_1_2
+                        urlTitle: >-
+                          Seagate Portable 2TB External Hard Drive Portable HDD
+                          – USB 3.0 for PC, Mac, PlayStation, & Xbox - 1-Year
+                          Rescue Service (STGX2000400)
+                        urlDescription: >-
+                          Easily store and access 2TB of content on the go with
+                          the Seagate Portable Drive, a great laptop hard drive.
+                          Designed to work with Windows or Mac computers, this
+                          compact external hard drive makes backup a snap. Just
+                          drag and drop To get set up, connect the portable hard
+                          drive to a computer for au...
+                        urlImage: >-
+                          https://images-na.ssl-images-amazon.com/images/I/31jBba7%2BySL._SR600%2c315_PIWhiteStrip%2cBottomLeft%2c0%2c35_PIStarRatingFOURANDHALF%2cBottomLeft%2c360%2c-6_SR600%2c315_ZA173%252C835%2c445%2c290%2c400%2c400%2cAmazonEmberBold%2c12%2c4%2c0%2c0%2c5_SCLZZZZZZZ_FMpng_BG255%2c255%2c255.jpg
+                        adsPitchS: >-
+                          The Seagate Portable Drive is a compact external hard
+                          drive that stores 2TB of content. It works with
+                          Windows or Mac computers and is designed for easy file
+                          backup.
+                        adsTagline: 2TB of storage on the go
+                    status: completed
+                    datagroup: 49ffd8ff-eb35-485b-8e28-11a6dc9c5fc6
+                    errors: []
+                    createdAt: '2022-01-20T14:13:26.841Z'
+                    updatedAt: '2022-01-20T14:13:50.194Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 1244
+                    context:
+                      websiteUrl: https://stripe.com
+                    pipeline:
+                      - websiteUrl: https://stripe.com
+                        urlTitle: >-
+                          Online-Zahlungsabwicklung für Internetunternehmen –
+                          Stripe
+                        urlDescription: >-
+                          Die Abwicklung von Online-Zahlungen für
+                          Internetunternehmen. Stripe ist eine Kombination aus
+                          Zahlungs-APIs, die den Handel für Online-Unternehmen
+                          aller Größen ermöglicht und ebenfalls Betrug vorbeugt
+                          und das Verwalten von Abonnements möglich macht.
+                          Nutzen Sie die Zahlungsplattform von Stripe als eine
+                          einfach zu verwendende Lösung, um Zahlungen online
+                          anzunehmen und abzuwickeln.
+                        urlImage: >-
+                          https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80
+                        urlFavicon: >-
+                          https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico
+                        adsPitchS: >-
+                          Stripe optimizes payments for online businesses of all
+                          sizes. It prevents fraud while also providing
+                          subscription management. Stripe is a simple payment
+                          platform that makes it easy to accept payments online.
+                        adsTagline: The world's most powerful payment processing toolkit
+                        textIntent: Interested in Stripe
+                    status: completed
+                    datagroup: c7e26c04-1182-4bda-b86d-897b03381bf5
+                    errors: []
+                    createdAt: '2022-01-20T11:03:51.907Z'
+                    updatedAt: '2022-01-20T11:04:13.494Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 1243
+                    context:
+                      websiteUrl: https://zapier.com
+                    pipeline:
+                      - websiteUrl: https://zapier.com
+                        urlTitle: Zapier | The easiest way to automate your work
+                        urlFavicon: >-
+                          https://cdn.zapier.com/ssr/d69795aaaeeacccad462df7faa1bc2354e9829d5/_next/static/images/favicon.ico
+                    status: failed
+                    datagroup: 950cec72-0ff4-4494-831b-e4e951d4b4cd
+                    errors:
+                      - id: 539
+                        message: Cannot read property 'length' of undefined
+                    createdAt: '2022-01-20T10:21:34.076Z'
+                    updatedAt: '2022-01-20T10:21:39.329Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 1141
+                    context:
+                      websiteUrl: https://en.wikipedia.org/wiki/Magento
+                    pipeline:
+                      - websiteUrl: https://en.wikipedia.org/wiki/Magento
+                        urlTitle: Magento - Wikipedia
+                        urlType: website
+                        urlImage: >-
+                          https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Magento_Logo.svg/1200px-Magento_Logo.svg.png
+                        urlFavicon: /static/favicon/wikipedia.ico
+                    status: failed
+                    datagroup: fa4a392a-1b3a-4d9d-a3e1-f0d6f7298c06
+                    errors:
+                      - id: 539
+                        message: Cannot read property 'length' of undefined
+                    createdAt: '2022-01-19T09:04:41.990Z'
+                    updatedAt: '2022-01-19T09:04:51.601Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 793
+                    context:
+                      websiteUrl: https://stripe.com
+                    pipeline:
+                      - websiteUrl: https://stripe.com
+                        urlTitle: >-
+                          Online-Zahlungsabwicklung für Internetunternehmen –
+                          Stripe
+                        urlDescription: >-
+                          Die Abwicklung von Online-Zahlungen für
+                          Internetunternehmen. Stripe ist eine Kombination aus
+                          Zahlungs-APIs, die den Handel für Online-Unternehmen
+                          aller Größen ermöglicht und ebenfalls Betrug vorbeugt
+                          und das Verwalten von Abonnements möglich macht.
+                          Nutzen Sie die Zahlungsplattform von Stripe als eine
+                          einfach zu verwendende Lösung, um Zahlungen online
+                          anzunehmen und abzuwickeln.
+                        urlImage: >-
+                          https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80
+                        urlFavicon: >-
+                          https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico
+                        adsPitchS: >-
+                          Stripe is the best payment platform for online
+                          businesses. It combines payment APIs to make it easy
+                          for entrepreneurs of all sizes to start taking
+                          payments online. It also prevents frauds and lets you
+                          manage your subscriptions. Use Stripe as an easy way
+                          to start accepting payments online, and managing them
+                          too.
+                        adsTagline: Eine Lösung für den Erfolg Ihres Geschäfts
+                        textIntent: Interested in Stripe
+                    status: completed
+                    datagroup: d55f1aaf-df9f-49a0-b43b-344625c97eae
+                    errors: []
+                    createdAt: '2022-01-11T19:38:30.628Z'
+                    updatedAt: '2022-01-11T19:38:51.081Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 792
+                    context:
+                      websiteUrl: https://drafter.ai
+                    pipeline:
+                      - websiteUrl: https://drafter.ai
+                        urlTitle: '⚡ Drafter AI: Build AI Features in Days'
+                        urlDescription: >-
+                          Build, test, use and integrate AI without a line of
+                          code. Drafter AI - a no-code platform with 100+ data
+                          sources and ML models that work together.
+                        urlType: website
+                        urlImage: >-
+                          https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png
+                        urlFavicon: >-
+                          https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/
+                        adsPitchS: >-
+                          Drafter AI is a no-code platform that allows you to
+                          build AIs without a single line of code. It integrates
+                          data from 100+ data sources and ML models to make it
+                          work.
+                        adsTagline: >-
+                          Build, test, use and integrate AI without a line of
+                          code
+                        textIntent: Interested in Demo
+                    status: completed
+                    datagroup: 1e1964f2-15ed-483a-928c-9b11990e5377
+                    errors: []
+                    createdAt: '2022-01-11T19:23:07.651Z'
+                    updatedAt: '2022-01-11T19:23:16.492Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 791
+                    context:
+                      websiteUrl: https://drafter.ai
+                    pipeline:
+                      - websiteUrl: https://drafter.ai
+                        urlTitle: '⚡ Drafter AI: Build AI Features in Days'
+                        urlDescription: >-
+                          Build, test, use and integrate AI without a line of
+                          code. Drafter AI - a no-code platform with 100+ data
+                          sources and ML models that work together.
+                        urlType: website
+                        urlImage: >-
+                          https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png
+                        urlFavicon: >-
+                          https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/
+                        adsPitchS: >-
+                          Drafter is the first AI platform that requires no
+                          coding. It uses 100+ data sources and ML models to
+                          create customized AI for any use.
+                        adsTagline: AI for everyone
+                        textIntent: Interested in Demo
+                    status: completed
+                    datagroup: 9e02aa11-d1f8-4c8c-b3a1-a892ea964b09
+                    errors: []
+                    createdAt: '2022-01-11T19:22:12.459Z'
+                    updatedAt: '2022-01-11T19:22:23.941Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 790
+                    context:
+                      websiteUrl: https://fake-darafter.ai
+                    pipeline:
+                      - websiteUrl: https://fake-darafter.ai
+                    status: failed
+                    datagroup: e5d79b4a-35a5-48c1-bbf4-d6bd994a16d5
+                    errors:
+                      - id: 538
+                        message: An unknown error has occured. Please try again later.
+                    createdAt: '2022-01-11T19:17:45.111Z'
+                    updatedAt: '2022-01-11T19:17:49.414Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 789
+                    context:
+                      websiteUrl: https://non-drafter.ai
+                    pipeline:
+                      - websiteUrl: https://non-drafter.ai
+                    status: failed
+                    datagroup: 0055ce17-1af3-4c06-b9f8-929b358af9ac
+                    errors:
+                      - id: 538
+                    createdAt: '2022-01-11T19:14:19.001Z'
+                    updatedAt: '2022-01-11T19:14:23.997Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 788
+                    context:
+                      websiteUrl: https://drafter.ai
+                    pipeline:
+                      - websiteUrl: https://drafter.ai
+                        urlTitle: '⚡ Drafter AI: Build AI Features in Days'
+                        urlDescription: >-
+                          Build, test, use and integrate AI without a line of
+                          code. Drafter AI - a no-code platform with 100+ data
+                          sources and ML models that work together.
+                        urlType: website
+                        urlImage: >-
+                          https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png
+                        urlFavicon: >-
+                          https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/
+                        adsPitchS: >-
+                          You want to code AI? Nope! Drafter AI makes it easy to
+                          to create, test, release and integrate AI with 100+
+                          pre-built data sources and ML models.
+                        adsTagline: Build, use and integrate AI
+                        textIntent: Interested in Demo
+                    status: completed
+                    datagroup: 7ef68a78-4cc8-427a-912e-a0b0b05e4744
+                    errors: []
+                    createdAt: '2022-01-11T19:13:54.031Z'
+                    updatedAt: '2022-01-11T19:14:01.871Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 787
+                    context:
+                      websiteUrl: https://drafter.ai
+                    pipeline:
+                      - websiteUrl: https://drafter.ai
+                        urlTitle: '⚡ Drafter AI: Build AI Features in Days'
+                        urlDescription: >-
+                          Build, test, use and integrate AI without a line of
+                          code. Drafter AI - a no-code platform with 100+ data
+                          sources and ML models that work together.
+                        urlType: website
+                        urlImage: >-
+                          https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png
+                        urlFavicon: >-
+                          https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/
+                        adsPitchS: >-
+                          Drafter AI is a no-code platform for data sources and
+                          ML models. It works to build, test and create AI for
+                          all, without any coding knowledge.
+                        adsTagline: Build, test, and integrate AI without a line of code
+                        textIntent: Interested in Demo
+                    status: completed
+                    datagroup: da464e00-729d-4622-bedb-817a8ee17f93
+                    errors: []
+                    createdAt: '2022-01-11T19:13:18.181Z'
+                    updatedAt: '2022-01-11T19:13:36.905Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 786
+                    context:
+                      websiteUrl: https://drafter.ai
+                    pipeline:
+                      - websiteUrl: https://drafter.ai
+                        urlTitle: '⚡ Drafter AI: Build AI Features in Days'
+                        urlDescription: >-
+                          Build, test, use and integrate AI without a line of
+                          code. Drafter AI - a no-code platform with 100+ data
+                          sources and ML models that work together.
+                        urlType: website
+                        urlImage: >-
+                          https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png
+                        urlFavicon: >-
+                          https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/
+                        adsPitchS: >-
+                          Drafter AI is a no-code platform with 100+ data
+                          sources and ML models for use in any situation.
+                        adsTagline: Creating AI without a line of code
+                        textIntent: Interested in Demo
+                    status: completed
+                    datagroup: null
+                    errors: []
+                    createdAt: '2022-01-11T17:23:07.740Z'
+                    updatedAt: '2022-01-11T17:23:19.393Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 785
+                    context:
+                      websiteUrl: https://drafter.ai
+                    pipeline:
+                      - websiteUrl: https://drafter.ai
+                        urlTitle: '⚡ Drafter AI: Build AI Features in Days'
+                        urlDescription: >-
+                          Build, test, use and integrate AI without a line of
+                          code. Drafter AI - a no-code platform with 100+ data
+                          sources and ML models that work together.
+                        urlType: website
+                        urlImage: >-
+                          https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png
+                        urlFavicon: >-
+                          https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/
+                        adsPitchS: >-
+                          This is the system for the rest of us. You can build,
+                          test, use and integrate artificial intelligence
+                          without learning code. 100+ data sources and machine
+                          learning models work together to help you create an
+                          AI-driven product.
+                        adsTagline: AI without the code
+                        textIntent: Interested in Demo
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2022-01-11T10:15:28.965Z'
+                    updatedAt: '2022-01-11T10:15:36.013Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 784
+                    context:
+                      websiteUrl: https://drafter.ai
+                    pipeline:
+                      - websiteUrl: https://drafter.ai
+                        urlTitle: '⚡ Drafter AI: Build AI Features in Days'
+                        urlDescription: >-
+                          Build, test, use and integrate AI without a line of
+                          code. Drafter AI - a no-code platform with 100+ data
+                          sources and ML models that work together.
+                        urlType: website
+                        urlImage: >-
+                          https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png
+                        urlFavicon: >-
+                          https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/
+                        adsPitchS: >-
+                          Drafter AI is a no-code platform that automates the
+                          process of building, testing and using AI. Drafter
+                          provides custom data sources and models that work
+                          together.
+                        adsTagline: AI for every problem
+                        textIntent: Interested in Demo
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2022-01-11T10:14:21.867Z'
+                    updatedAt: '2022-01-11T10:14:32.470Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 783
+                    context:
+                      websiteUrl: https://drafter.ai
+                    pipeline:
+                      - websiteUrl: https://drafter.ai
+                        urlTitle: '⚡ Drafter AI: Build AI Features in Days'
+                        urlDescription: >-
+                          Build, test, use and integrate AI without a line of
+                          code. Drafter AI - a no-code platform with 100+ data
+                          sources and ML models that work together.
+                        urlType: website
+                        urlImage: >-
+                          https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png
+                        urlFavicon: >-
+                          https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/
+                        adsPitchS: >-
+                          Drafter AI gives you the power to build, test and use
+                          AI without writing a line of code. It integrates 100+
+                          data sources and ML models that work together.
+                        adsTagline: AI Made Easy
+                        textIntent: Interested in Demo
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2022-01-11T10:13:41.570Z'
+                    updatedAt: '2022-01-11T10:13:50.429Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 782
+                    context:
+                      websiteUrl: https://drafter.ai
+                    pipeline:
+                      - websiteUrl: https://drafter.ai
+                        urlTitle: '⚡ Drafter AI: Build AI Features in Days'
+                        urlDescription: >-
+                          Build, test, use and integrate AI without a line of
+                          code. Drafter AI - a no-code platform with 100+ data
+                          sources and ML models that work together.
+                        urlType: website
+                        urlImage: >-
+                          https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png
+                        urlFavicon: >-
+                          https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/
+                        adsPitchS: >-
+                          Drafter AI is a no-code platform that makes it
+                          possible to build, test, use and develop AI without a
+                          line of code. It has 100+ data sources and ML models
+                          that work together.
+                        adsTagline: AI without the coding
+                        textIntent: Interested in Demo
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2022-01-11T10:12:11.673Z'
+                    updatedAt: '2022-01-11T10:12:18.275Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 781
+                    context:
+                      websiteUrl: https://drafter.ai
+                    pipeline:
+                      - websiteUrl: https://drafter.ai
+                        urlTitle: '⚡ Drafter AI: Build AI Features in Days'
+                        urlDescription: >-
+                          Build, test, use and integrate AI without a line of
+                          code. Drafter AI - a no-code platform with 100+ data
+                          sources and ML models that work together.
+                        urlType: website
+                        urlImage: >-
+                          https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png
+                        urlFavicon: >-
+                          https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/
+                        adsPitchS: >-
+                          Drafter AI is a no-code platform that provides 100+
+                          data sources and ML models that work together. You can
+                          build, test, use and integrate AI without relying on a
+                          line of code.
+                        adsTagline: AI for everyone
+                        textIntent: Interested in Demo
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2022-01-11T10:11:34.722Z'
+                    updatedAt: '2022-01-11T10:11:41.482Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 780
+                    context:
+                      websiteUrl: https://drafter.ai
+                    pipeline:
+                      - websiteUrl: https://drafter.ai
+                        urlTitle: '⚡ Drafter AI: Build AI Features in Days'
+                        urlDescription: >-
+                          Build, test, use and integrate AI without a line of
+                          code. Drafter AI - a no-code platform with 100+ data
+                          sources and ML models that work together.
+                        urlType: website
+                        urlImage: >-
+                          https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png
+                        urlFavicon: >-
+                          https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/
+                        adsPitchS: >-
+                          Drafter AI allows you to use AI without writing code,
+                          just drag and drop. It uses pre-built AI models that
+                          work together with your data to give you intelligent
+                          insights.
+                        adsTagline: >-
+                          Rapidly build, test, and deploy AI without writing a
+                          line of code
+                        textIntent: Interested in Demo
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2022-01-11T10:10:35.190Z'
+                    updatedAt: '2022-01-11T10:10:44.625Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 779
+                    context:
+                      websiteUrl: https://drafter.ai
+                    pipeline:
+                      - websiteUrl: https://drafter.ai
+                        urlTitle: '⚡ Drafter AI: Build AI Features in Days'
+                        urlDescription: >-
+                          Build, test, use and integrate AI without a line of
+                          code. Drafter AI - a no-code platform with 100+ data
+                          sources and ML models that work together.
+                        urlType: website
+                        urlImage: >-
+                          https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png
+                        urlFavicon: >-
+                          https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/
+                        adsPitchS: >-
+                          Use Drafter AI for 100+ data sources in AI without
+                          writing a line of code.
+                        adsTagline: Build and use AI without a line of code
+                        textIntent: Interested in Demo
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2022-01-11T10:07:50.087Z'
+                    updatedAt: '2022-01-11T10:08:00.413Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 778
+                    context:
+                      websiteUrl: https://airtable.com
+                    pipeline:
+                      - websiteUrl: https://airtable.com
+                        urlTitle: Airtable | Everyone's app platform
+                        urlDescription: >-
+                          Airtable is a low-code platform for building
+                          collaborative apps. Customize your workflow,
+                          collaborate, and achieve ambitious outcomes. Get
+                          started for free.
+                        urlType: website
+                        urlImage: https://static.airtable.com/images/oembed/airtable.png
+                        urlFavicon: /images/favicon/baymax/favicon-32x32.png
+                        adsPitchS: >-
+                          Airtable is a new paradigm for creating tasks, where
+                          your workflow is customizable. It allows you to better
+                          collaborate with your team on ambitious outcomes.
+                        adsTagline: Combine your data, without all the work
+                        textIntent: Interested in Demo
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2022-01-11T10:05:18.443Z'
+                    updatedAt: '2022-01-11T10:05:35.859Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 1
+                  - id: 687
+                    context:
+                      websiteUrl: https://stripe.com
+                    pipeline:
+                      - websiteUrl: https://stripe.com
+                        urlTitle: >-
+                          Online payment processing for internet businesses -
+                          Stripe
+                        urlDescription: >-
+                          Online payment processing for internet businesses.
+                          Stripe is a suite of payment APIs that powers commerce
+                          for online businesses of all sizes, including fraud
+                          prevention, and subscription management. Use Stripe’s
+                          payment platform to accept and process payments online
+                          for easy-to-use commerce solutions.
+                        urlType: site
+                        urlImage: >-
+                          https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80
+                        urlAddress: https://stripe.com/
+                        urlFavicon: >-
+                          https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico
+                        urlName: Online payment processing for internet businesses
+                        adsPitchS: >-
+                          Stripe is an online payments company that provides all
+                          of the tools your company needs to accept and process
+                          payments online. Their suite of APIs offers fraud
+                          prevention, subscription management, and easy-to-use
+                          commerce solutions.
+                        adsTagline: Put your store in control
+                        textIntent: Interested in Demo
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2022-01-04T18:01:33.805Z'
+                    updatedAt: '2022-01-04T18:01:33.805Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 660
+                    context:
+                      websiteUrl: https://stripe.com
+                    pipeline:
+                      - websiteUrl: https://stripe.com
+                        urlTitle: >-
+                          Online payment processing for internet businesses -
+                          Stripe
+                        urlDescription: >-
+                          Online payment processing for internet businesses.
+                          Stripe is a suite of payment APIs that powers commerce
+                          for online businesses of all sizes, including fraud
+                          prevention, and subscription management. Use Stripe’s
+                          payment platform to accept and process payments online
+                          for easy-to-use commerce solutions.
+                        urlType: site
+                        urlImage: >-
+                          https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80
+                        urlAddress: https://stripe.com/en-ca
+                        urlFavicon: >-
+                          https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico
+                        urlName: Online payment processing for internet businesses
+                        adsPitchS: >-
+                          Stripe is a solution for easy-to-use commerce that
+                          provides fraud prevention and subscription management
+                          services.
+                        adsTagline: Simple and intuitive payments
+                        textIntent: Interested in Demo
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2021-12-30T10:30:41.734Z'
+                    updatedAt: '2021-12-30T10:30:41.734Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 659
+                    context:
+                      websiteUrl: https://stripe.com
+                    pipeline:
+                      - websiteUrl: https://stripe.com
+                        urlTitle: >-
+                          Online payment processing for internet businesses -
+                          Stripe
+                        urlDescription: >-
+                          Online payment processing for internet businesses.
+                          Stripe is a suite of payment APIs that powers commerce
+                          for online businesses of all sizes, including fraud
+                          prevention, and subscription management. Use Stripe’s
+                          payment platform to accept and process payments online
+                          for easy-to-use commerce solutions.
+                        urlType: site
+                        urlImage: >-
+                          https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80
+                        urlAddress: https://stripe.com/en-ca
+                        urlFavicon: >-
+                          https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico
+                        urlName: Online payment processing for internet businesses
+                        adsPitchS: >-
+                          Stripe provides the most complete and flexible set of
+                          APIs and SDKs for internet businesses. They process
+                          and accept payments and offer subscriptions to
+                          supercharge your business.
+                        adsTagline: Three clicks, and you're done
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2021-12-30T10:10:52.420Z'
+                    updatedAt: '2021-12-30T10:10:52.420Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 658
+                    context:
+                      websiteUrl: https://activechat.ai
+                    pipeline:
+                      - websiteUrl: https://activechat.ai
+                        urlTitle: >-
+                          AI assistants for customer self-service | Chatbots and
+                          live chat for customer service automation
+                        urlDescription: >-
+                          Take pressure off of your human support and sales
+                          teams with conversational AI and customer service
+                          automation. Make your customers feel cared for.
+                        urlType: website
+                        urlImage: >-
+                          https://activechat.ai/wp-content/uploads/2020/05/customer-service-and-sales-automation.png
+                        urlAddress: https://activechat.ai/
+                        urlFavicon: >-
+                          https://activechat.ai/wp-content/uploads/2020/05/cropped-AC_logo_symbol-192x192.png
+                        urlName: Chatbots and live chat for customer service automation
+                        adsPitchS: >-
+                          Rather than using human support, take the pressure off
+                          with automated AI technology. Your customers will feel
+                          cared for and valued.
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2021-12-30T09:55:51.880Z'
+                    updatedAt: '2021-12-30T09:55:51.880Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 657
+                    context:
+                      websiteUrl: https://stripe.com
+                    pipeline:
+                      - websiteUrl: https://stripe.com
+                        urlTitle: >-
+                          Online payment processing for internet businesses -
+                          Stripe
+                        urlDescription: >-
+                          Online payment processing for internet businesses.
+                          Stripe is a suite of payment APIs that powers commerce
+                          for online businesses of all sizes, including fraud
+                          prevention, and subscription management. Use Stripe’s
+                          payment platform to accept and process payments online
+                          for easy-to-use commerce solutions.
+                        urlType: site
+                        urlImage: >-
+                          https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80
+                        urlAddress: https://stripe.com/en-ca
+                        urlFavicon: >-
+                          https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico
+                        urlName: Online payment processing for internet businesses
+                        adsPitchS: >-
+                          Stripe is a suite of payment APIs that have been used
+                          by online businesses of all sizes. You can use Stripe
+                          to accept and process payments for your business.
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2021-12-28T09:00:59.666Z'
+                    updatedAt: '2021-12-28T09:00:59.666Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 656
+                    context:
+                      websiteUrl: https://stripe.com
+                    pipeline:
+                      - websiteUrl: https://stripe.com
+                        urlTitle: >-
+                          Online payment processing for internet businesses -
+                          Stripe
+                        urlDescription: >-
+                          Online payment processing for internet businesses.
+                          Stripe is a suite of payment APIs that powers commerce
+                          for online businesses of all sizes, including fraud
+                          prevention, and subscription management. Use Stripe’s
+                          payment platform to accept and process payments online
+                          for easy-to-use commerce solutions.
+                        urlType: site
+                        urlImage: >-
+                          https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80
+                        urlAddress: https://stripe.com/
+                        urlFavicon: >-
+                          https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico
+                        urlName: Online payment processing for internet businesses
+                        adsPitchS: >-
+                          Use the Stripe payment API and be on your way to easy
+                          and safe commerce.
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2021-12-23T18:11:03.258Z'
+                    updatedAt: '2021-12-23T18:11:03.258Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 655
+                    context:
+                      websiteUrl: https://drafter.ai
+                    pipeline:
+                      - websiteUrl: https://drafter.ai
+                        urlTitle: '⚡ Drafter AI: Build AI Features in Days'
+                        urlDescription: >-
+                          Build, test, use and integrate AI without a line of
+                          code. Drafter AI - a no-code platform with 100+ data
+                          sources and ML models that work together.
+                        urlType: website
+                        urlImage: >-
+                          https://ucarecdn.com/52dd480f-3731-4b05-8dd6-4460893cec5c/image.png
+                        urlAddress: https://drafter.ai/
+                        urlFavicon: >-
+                          https://ucarecdn.com/43ec32bf-dfd6-42ef-8ba2-48038457852a/
+                        urlName: ⚡ Drafter AI
+                        adsPitchS: >-
+                          Drafter AI is the ultimate no-code platform for
+                          building, testing, integrating AI, and machine
+                          learning. Drafter AI is full of models that work with
+                          no coding required.
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2021-12-23T18:02:28.762Z'
+                    updatedAt: '2021-12-23T18:02:28.762Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 654
+                    context:
+                      websiteUrl: https://stripe.com
+                    pipeline:
+                      - websiteUrl: https://stripe.com
+                        urlTitle: >-
+                          Online payment processing for internet businesses -
+                          Stripe
+                        urlDescription: >-
+                          Online payment processing for internet businesses.
+                          Stripe is a suite of payment APIs that powers commerce
+                          for online businesses of all sizes, including fraud
+                          prevention, and subscription management. Use Stripe’s
+                          payment platform to accept and process payments online
+                          for easy-to-use commerce solutions.
+                        urlType: site
+                        urlImage: >-
+                          https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80
+                        urlAddress: https://stripe.com/
+                        urlFavicon: >-
+                          https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico
+                        urlName: Online payment processing for internet businesses
+                        adsPitchS: >-
+                          Stripe automates the backend of your ecommerce
+                          business, empowering you to focus on the things you do
+                          best. With an easy-to-use platform and a suite of
+                          payment APIs, Stripe provides reliable, low-cost
+                          online payment processing.
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2021-12-23T18:01:59.643Z'
+                    updatedAt: '2021-12-23T18:01:59.643Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 650
+                    context:
+                      websiteUrl: https://stripe.com
+                    pipeline:
+                      - websiteUrl: https://stripe.com
+                        urlTitle: >-
+                          Online payment processing for internet businesses -
+                          Stripe
+                        urlDescription: >-
+                          Online payment processing for internet businesses.
+                          Stripe is a suite of payment APIs that powers commerce
+                          for online businesses of all sizes, including fraud
+                          prevention, and subscription management. Use Stripe’s
+                          payment platform to accept and process payments online
+                          for easy-to-use commerce solutions.
+                        urlType: site
+                        urlImage: >-
+                          https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80
+                        urlAddress: https://stripe.com/
+                        urlFavicon: >-
+                          https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico
+                        urlName: Online payment processing for internet businesses
+                        adsPitchS: >-
+                          The Stripe payment API is a suite of payment methods
+                          for any type of business. It has fraud prevention and
+                          subscription management, and makes payments easy to
+                          maintain your online business.
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2021-12-21T15:31:19.325Z'
+                    updatedAt: '2021-12-21T15:31:19.325Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 649
+                    context:
+                      websiteUrl: https://stripe.com
+                    pipeline:
+                      - websiteUrl: https://stripe.com
+                        urlTitle: >-
+                          Online payment processing for internet businesses -
+                          Stripe
+                        urlDescription: >-
+                          Online payment processing for internet businesses.
+                          Stripe is a suite of payment APIs that powers commerce
+                          for online businesses of all sizes, including fraud
+                          prevention, and subscription management. Use Stripe’s
+                          payment platform to accept and process payments online
+                          for easy-to-use commerce solutions.
+                        urlType: site
+                        urlImage: >-
+                          https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80
+                        urlAddress: https://stripe.com/
+                        urlFavicon: >-
+                          https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico
+                        urlName: Online payment processing for internet businesses
+                        adsPitchS: >-
+                          Stripe is the payment processing platform for all of
+                          your online needs.
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2021-12-20T15:05:48.763Z'
+                    updatedAt: '2021-12-20T15:05:48.763Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+                  - id: 648
+                    context:
+                      websiteUrl: https://stripe.com
+                    pipeline:
+                      - websiteUrl: https://stripe.com
+                        urlTitle: >-
+                          Online payment processing for internet businesses -
+                          Stripe
+                        urlDescription: >-
+                          Online payment processing for internet businesses.
+                          Stripe is a suite of payment APIs that powers commerce
+                          for online businesses of all sizes, including fraud
+                          prevention, and subscription management. Use Stripe’s
+                          payment platform to accept and process payments online
+                          for easy-to-use commerce solutions.
+                        urlType: site
+                        urlImage: >-
+                          https://images.ctfassets.net/fzn2n1nzq965/3AGidihOJl4nH9D1vDjM84/9540155d584be52fc54c443b6efa4ae6/homepage.png?q=80
+                        urlAddress: https://stripe.com/
+                        urlFavicon: >-
+                          https://assets.ctfassets.net/fzn2n1nzq965/01hMKr6nEEGVfOuhsaMIXQ/c424849423b5f036a8892afa09ac38c7/favicon.ico
+                        urlName: Online payment processing for internet businesses
+                        adsPitchS: >-
+                          Stripe is an online payment processing system for
+                          online businesses. It provides the ability to accept
+                          and process payments for an easy-to-use, joyous
+                          commerce solution.
+                    status: completed
+                    datagroup: a7adaadb-201b-4029-ba66-7d92c914e21e
+                    errors: []
+                    createdAt: '2021-12-20T14:53:24.922Z'
+                    updatedAt: '2021-12-20T14:53:24.922Z'
+                    workflowId: 110
+                    organizationId: 1
+                    userId: 3
+  /workflow-executions/4924:
+    get:
+      tags:
+        - Workflow Executions
+      summary: Get workflow execution by id
+      description: |-
+        ``` javascript
+        import fetch from 'node-fetch'
+        import {
+          initialize,
+          WORKFLOW_EXAMPLE,
+          WORKFLOW_EXECUTION_EXAMPLE,
+        } from '@phonal-technologies/drafterai-js'
+        // Init an API with apikey and fetch provider
+        const accessKey = process.env.DRAFTER_ACCESS_KEY
+        const drafterApi = initialize(accessKey, {
+          fetch,
+        })
+        ;(async () => {
+          console.log('Workflow execution example', WORKFLOW_EXECUTION_EXAMPLE)
+          const wfExecution = await drafterApi.workflowExecutions.get(4924)
+
+          console.log('Get workflow execution', wfExecution)
+        })
+
+        ```
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-DNS-Prefetch-Control:
+              schema:
+                type: string
+                example: 'off'
+            Expect-CT:
+              schema:
+                type: string
+                example: max-age=0
+            X-Frame-Options:
+              schema:
+                type: string
+                example: SAMEORIGIN
+            Strict-Transport-Security:
+              schema:
+                type: string
+                example: max-age=15552000; includeSubDomains
+            X-Download-Options:
+              schema:
+                type: string
+                example: noopen
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            X-Permitted-Cross-Domain-Policies:
+              schema:
+                type: string
+                example: none
+            Referrer-Policy:
+              schema:
+                type: string
+                example: no-referrer
+            X-XSS-Protection:
+              schema:
+                type: integer
+                example: '0'
+            Vary:
+              schema:
+                type: string
+                example: Origin, Accept, Accept-Encoding
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: 'true'
+            Allow:
+              schema:
+                type: string
+                example: GET,POST,PATCH,PUT,DELETE
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '378'
+            ETag:
+              schema:
+                type: string
+                example: W/"17a-4snTCLMki+9611/ZA8s5UnoSyF4"
+            Date:
+              schema:
+                type: string
+                example: Sat, 05 Feb 2022 10:33:24 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                id: 4924
+                context:
+                  redditTopic: Suggest eCommerce Product Info
+                pipeline:
+                  - redditTopic: Suggest eCommerce Product Info
+                    textHashtags: '#ecommerce #product'
+                status: completed
+                datagroup: 38d1c1a4-fabc-45a1-b0c7-ef2d3e57791a
+                errors: []
+                createdAt: '2022-02-03T15:52:56.943Z'
+                updatedAt: '2022-02-03T15:53:02.176Z'
+                workflowId: 110
+                organizationId: 1
+                userId: 1
+  /workflow-executions:
+    post:
+      tags:
+        - Workflow Executions
+      summary: Create workflow execution
+      description: |-
+        ``` javascript
+        import fetch from 'node-fetch'
+        import {
+          initialize,
+          WORKFLOW_EXAMPLE,
+          WORKFLOW_EXECUTION_EXAMPLE,
+        } from '@phonal-technologies/drafterai-js'
+        // Init an API with apikey and fetch provider
+        const accessKey = process.env.DRAFTER_ACCESS_KEY
+        const drafterApi = initialize(accessKey, {
+          fetch,
+        })
+        ;(async () => {
+          console.log('Workflow execution example', WORKFLOW_EXECUTION_EXAMPLE)
+          const wfExecutions = await drafterApi.workflowExecutions.create({
+            "workflowId": 110,
+            "context": { "redditTopic": "Suggest eCommerce Product Info"  }
+          })
+
+          console.log('Workflow executions', wfExecutions)
+        })
+
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                - workflowId: 110
+                  context:
+                    redditTopic: Suggest eCommerce Product Info
+      responses:
+        '201':
+          description: Created
+          headers:
+            X-DNS-Prefetch-Control:
+              schema:
+                type: string
+                example: 'off'
+            Expect-CT:
+              schema:
+                type: string
+                example: max-age=0
+            X-Frame-Options:
+              schema:
+                type: string
+                example: SAMEORIGIN
+            Strict-Transport-Security:
+              schema:
+                type: string
+                example: max-age=15552000; includeSubDomains
+            X-Download-Options:
+              schema:
+                type: string
+                example: noopen
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            X-Permitted-Cross-Domain-Policies:
+              schema:
+                type: string
+                example: none
+            Referrer-Policy:
+              schema:
+                type: string
+                example: no-referrer
+            X-XSS-Protection:
+              schema:
+                type: integer
+                example: '0'
+            Vary:
+              schema:
+                type: string
+                example: Origin, Accept, Accept-Encoding
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: 'true'
+            Allow:
+              schema:
+                type: string
+                example: GET,POST,PATCH,PUT,DELETE
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '292'
+            ETag:
+              schema:
+                type: string
+                example: W/"124-GY6ddAWfbE0BCMN0/g6E5fYkoNU"
+            Date:
+              schema:
+                type: string
+                example: Sat, 05 Feb 2022 10:36:08 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                - pipeline: []
+                  status: queued
+                  errors: []
+                  id: 5375
+                  workflowId: 110
+                  context:
+                    redditTopic: Suggest eCommerce Product Info
+                  datagroup: 9cc979ea-5ce2-4130-bb9e-169dbb050a0f
+                  organizationId: 1
+                  userId: 1
+                  createdAt: '2022-02-05T10:36:07.500Z'
+                  updatedAt: '2022-02-05T10:36:07.500Z'
+        '500':
+          description: Internal Server Error
+          headers:
+            X-DNS-Prefetch-Control:
+              schema:
+                type: string
+                example: 'off'
+            Expect-CT:
+              schema:
+                type: string
+                example: max-age=0
+            X-Frame-Options:
+              schema:
+                type: string
+                example: SAMEORIGIN
+            Strict-Transport-Security:
+              schema:
+                type: string
+                example: max-age=15552000; includeSubDomains
+            X-Download-Options:
+              schema:
+                type: string
+                example: noopen
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            X-Permitted-Cross-Domain-Policies:
+              schema:
+                type: string
+                example: none
+            Referrer-Policy:
+              schema:
+                type: string
+                example: no-referrer
+            X-XSS-Protection:
+              schema:
+                type: integer
+                example: '0'
+            Vary:
+              schema:
+                type: string
+                example: Origin, Accept-Encoding
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: 'true'
+            Allow:
+              schema:
+                type: string
+                example: GET,POST,PATCH,PUT,DELETE
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '124'
+            ETag:
+              schema:
+                type: string
+                example: W/"7c-b7uwF+XimfdTPQSpqakcVXvp0lU"
+            Date:
+              schema:
+                type: string
+                example: Sat, 05 Feb 2022 10:35:21 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                error:
+                  name: GeneralError
+                  message: context is a required field
+                  code: 500
+                  className: general-error
+                  errors: {}
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Get users list
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-DNS-Prefetch-Control:
+              schema:
+                type: string
+                example: 'off'
+            Expect-CT:
+              schema:
+                type: string
+                example: max-age=0
+            X-Frame-Options:
+              schema:
+                type: string
+                example: SAMEORIGIN
+            Strict-Transport-Security:
+              schema:
+                type: string
+                example: max-age=15552000; includeSubDomains
+            X-Download-Options:
+              schema:
+                type: string
+                example: noopen
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            X-Permitted-Cross-Domain-Policies:
+              schema:
+                type: string
+                example: none
+            Referrer-Policy:
+              schema:
+                type: string
+                example: no-referrer
+            X-XSS-Protection:
+              schema:
+                type: integer
+                example: '0'
+            Vary:
+              schema:
+                type: string
+                example: Origin, Accept, Accept-Encoding
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: 'true'
+            Allow:
+              schema:
+                type: string
+                example: GET,POST,PATCH,PUT,DELETE
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            ETag:
+              schema:
+                type: string
+                example: W/"1739-vC87/Nc9ahDYE8+dKF2E/E8n5zM"
+            Content-Encoding:
+              schema:
+                type: string
+                example: gzip
+            Date:
+              schema:
+                type: string
+                example: Sat, 05 Feb 2022 10:37:00 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                total: 12
+                limit: 10
+                skip: 0
+                data:
+                  - id: 2
+                    organizationId: 1
+                    enabled: true
+                    role: user
+                    email: dmitry.tuzenkvo@gmail.com
+                    avatarUrl: null
+                    firstName: Dmitry
+                    lastName: Tuzenkov
+                    googleId: null
+                    facebookId: null
+                    twitterId: null
+                    hasEmailSub: true
+                    hasVerifiedEmail: true
+                    acceptedTerms: true
+                    refererProvider: null
+                    refererProviderCode: null
+                    refererOwnCode: null
+                    subscription:
+                      id: 2
+                      planId: '2'
+                      status: active
+                      credits: 1000000
+                      usedCredits: 0
+                      trialEndsAt: null
+                      stripeId: null
+                      stripe: null
+                    organization:
+                      id: 1
+                      name: Drafter Developers Inc.
+                      status: active
+                      ownerId: 1
+                  - id: 9
+                    organizationId: 1
+                    enabled: true
+                    role: owner
+                    email: owner@drafter.ai
+                    avatarUrl: null
+                    firstName: Owner
+                    lastName: Drafter
+                    googleId: null
+                    facebookId: null
+                    twitterId: null
+                    hasEmailSub: true
+                    hasVerifiedEmail: true
+                    acceptedTerms: true
+                    refererProvider: null
+                    refererProviderCode: null
+                    refererOwnCode: null
+                    subscription:
+                      id: 9
+                      planId: '2'
+                      status: active
+                      credits: 1000000
+                      usedCredits: 0
+                      trialEndsAt: null
+                      stripeId: null
+                      stripe: null
+                    organization:
+                      id: 1
+                      name: Drafter Developers Inc.
+                      status: active
+                      ownerId: 1
+                  - id: 116
+                    organizationId: 1
+                    enabled: true
+                    role: user
+                    email: dmitry.tuzenkov+invitation4@gmail.com
+                    avatarUrl: null
+                    firstName: Dmitry
+                    lastName: Tuzenkov
+                    googleId: null
+                    facebookId: null
+                    twitterId: null
+                    hasEmailSub: true
+                    hasVerifiedEmail: true
+                    acceptedTerms: true
+                    refererProvider: null
+                    refererProviderCode: null
+                    refererOwnCode: null
+                    subscription:
+                      id: 58
+                      planId: '2'
+                      status: active
+                      credits: 1000000
+                      usedCredits: 0
+                      trialEndsAt: null
+                      stripeId: null
+                      stripe: null
+                    organization:
+                      id: 1
+                      name: Drafter Developers Inc.
+                      status: active
+                      ownerId: 1
+                  - id: 116
+                    organizationId: 1
+                    enabled: true
+                    role: user
+                    email: dmitry.tuzenkov+invitation4@gmail.com
+                    avatarUrl: null
+                    firstName: Dmitry
+                    lastName: Tuzenkov
+                    googleId: null
+                    facebookId: null
+                    twitterId: null
+                    hasEmailSub: true
+                    hasVerifiedEmail: true
+                    acceptedTerms: true
+                    refererProvider: null
+                    refererProviderCode: null
+                    refererOwnCode: null
+                    subscription:
+                      id: 59
+                      planId: '2'
+                      status: active
+                      credits: 1000000
+                      usedCredits: 0
+                      trialEndsAt: null
+                      stripeId: null
+                      stripe: null
+                    organization:
+                      id: 1
+                      name: Drafter Developers Inc.
+                      status: active
+                      ownerId: 1
+                  - id: 1
+                    organizationId: 1
+                    enabled: true
+                    role: owner
+                    email: owner@new.drafter.ai
+                    avatarUrl: null
+                    firstName: Oleg
+                    lastName: Voronko
+                    googleId: null
+                    facebookId: null
+                    twitterId: null
+                    hasEmailSub: true
+                    hasVerifiedEmail: true
+                    acceptedTerms: true
+                    refererProvider: null
+                    refererProviderCode: null
+                    refererOwnCode: null
+                    subscription:
+                      id: 1
+                      planId: '2'
+                      status: active
+                      credits: 1000000
+                      usedCredits: 327051
+                      trialEndsAt: null
+                      stripeId: cus_KkMxk40DlDxi0m
+                      stripe:
+                        subscription: sub_1K4sDHEBSGAEGWrHNIgRxddY
+                        subscription_item: si_KkMxT2vMgYddv6
+                        priceId: price_1J8nEbEBSGAEGWrHvjTEB1L4
+                        productId: prod_JmLwGBZbrM1h12
+                    organization:
+                      id: 1
+                      name: Drafter Developers Inc.
+                      status: active
+                      ownerId: 1
+                  - id: 119
+                    organizationId: 1
+                    enabled: true
+                    role: user
+                    email: dmitry.tuzenkov+invitation6@gmail.com
+                    avatarUrl: null
+                    firstName: Dmitry
+                    lastName: Tuzenkov
+                    googleId: null
+                    facebookId: null
+                    twitterId: null
+                    hasEmailSub: true
+                    hasVerifiedEmail: true
+                    acceptedTerms: true
+                    refererProvider: null
+                    refererProviderCode: null
+                    refererOwnCode: null
+                    subscription:
+                      id: 61
+                      planId: '2'
+                      status: active
+                      credits: 1000000
+                      usedCredits: 0
+                      trialEndsAt: null
+                      stripeId: null
+                      stripe: null
+                    organization:
+                      id: 1
+                      name: Drafter Developers Inc.
+                      status: active
+                      ownerId: 1
+                  - id: 94
+                    organizationId: 1
+                    enabled: true
+                    role: user
+                    email: dmitry.tuzenkov+50@gmail.com
+                    avatarUrl: null
+                    firstName: Dmitry
+                    lastName: Tuzenkov
+                    googleId: null
+                    facebookId: null
+                    twitterId: null
+                    hasEmailSub: true
+                    hasVerifiedEmail: true
+                    acceptedTerms: true
+                    refererProvider: null
+                    refererProviderCode: null
+                    refererOwnCode: null
+                    subscription:
+                      id: 43
+                      planId: '2'
+                      status: active
+                      credits: 1000000
+                      usedCredits: 0
+                      trialEndsAt: null
+                      stripeId: null
+                      stripe: null
+                    organization:
+                      id: 1
+                      name: Drafter Developers Inc.
+                      status: active
+                      ownerId: 1
+                  - id: 97
+                    organizationId: 1
+                    enabled: false
+                    role: user
+                    email: dmitry.tuzenkov+51@gmail.com
+                    avatarUrl: null
+                    firstName: Dmitry
+                    lastName: Tuzenkov
+                    googleId: null
+                    facebookId: null
+                    twitterId: null
+                    hasEmailSub: false
+                    hasVerifiedEmail: false
+                    acceptedTerms: true
+                    refererProvider: null
+                    refererProviderCode: null
+                    refererOwnCode: null
+                    subscription:
+                      id: 44
+                      planId: '2'
+                      status: active
+                      credits: 1000000
+                      usedCredits: 0
+                      trialEndsAt: null
+                      stripeId: null
+                      stripe: null
+                    organization:
+                      id: 1
+                      name: Drafter Developers Inc.
+                      status: active
+                      ownerId: 1
+                  - id: 122
+                    organizationId: 1
+                    enabled: true
+                    role: user
+                    email: dmitry.tuzenkov+invitation8@gmail.com
+                    avatarUrl: null
+                    firstName: Invitation8
+                    lastName: '777'
+                    googleId: null
+                    facebookId: null
+                    twitterId: null
+                    hasEmailSub: true
+                    hasVerifiedEmail: true
+                    acceptedTerms: true
+                    refererProvider: null
+                    refererProviderCode: null
+                    refererOwnCode: null
+                    subscription:
+                      id: 64
+                      planId: '2'
+                      status: active
+                      credits: 1000000
+                      usedCredits: 0
+                      trialEndsAt: null
+                      stripeId: null
+                      stripe: null
+                    organization:
+                      id: 1
+                      name: Drafter Developers Inc.
+                      status: active
+                      ownerId: 1
+                  - id: 120
+                    organizationId: 1
+                    enabled: true
+                    role: user
+                    email: dmitry.tuzenkov+invitation7@gmail.com
+                    avatarUrl: null
+                    firstName: dmitry
+                    lastName: tuzenkov 7
+                    googleId: null
+                    facebookId: null
+                    twitterId: null
+                    hasEmailSub: true
+                    hasVerifiedEmail: true
+                    acceptedTerms: true
+                    refererProvider: null
+                    refererProviderCode: null
+                    refererOwnCode: null
+                    subscription:
+                      id: 62
+                      planId: '2'
+                      status: active
+                      credits: 1000000
+                      usedCredits: 0
+                      trialEndsAt: null
+                      stripeId: null
+                      stripe: null
+                    organization:
+                      id: 1
+                      name: Drafter Developers Inc.
+                      status: active
+                      ownerId: 1
+  /users/1:
+    get:
+      tags:
+        - Users
+      summary: Get user by id
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-DNS-Prefetch-Control:
+              schema:
+                type: string
+                example: 'off'
+            Expect-CT:
+              schema:
+                type: string
+                example: max-age=0
+            X-Frame-Options:
+              schema:
+                type: string
+                example: SAMEORIGIN
+            Strict-Transport-Security:
+              schema:
+                type: string
+                example: max-age=15552000; includeSubDomains
+            X-Download-Options:
+              schema:
+                type: string
+                example: noopen
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            X-Permitted-Cross-Domain-Policies:
+              schema:
+                type: string
+                example: none
+            Referrer-Policy:
+              schema:
+                type: string
+                example: no-referrer
+            X-XSS-Protection:
+              schema:
+                type: integer
+                example: '0'
+            Vary:
+              schema:
+                type: string
+                example: Origin, Accept, Accept-Encoding
+            Access-Control-Allow-Credentials:
+              schema:
+                type: boolean
+                example: 'true'
+            Allow:
+              schema:
+                type: string
+                example: GET,POST,PATCH,PUT,DELETE
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '784'
+            ETag:
+              schema:
+                type: string
+                example: W/"310-6YAurvn4KUmQ5IrLQ5r8hOnG89I"
+            Date:
+              schema:
+                type: string
+                example: Sat, 05 Feb 2022 10:38:16 GMT
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                id: 1
+                organizationId: 1
+                enabled: true
+                role: owner
+                email: owner@new.drafter.ai
+                avatarUrl: null
+                firstName: Oleg
+                lastName: Voronko
+                googleId: null
+                facebookId: null
+                twitterId: null
+                hasEmailSub: true
+                hasVerifiedEmail: true
+                acceptedTerms: true
+                refererProvider: null
+                refererProviderCode: null
+                refererOwnCode: null
+                subscription:
+                  id: 1
+                  planId: '2'
+                  status: active
+                  credits: 1000000
+                  usedCredits: 327051
+                  trialEndsAt: null
+                  stripeId: cus_KkMxk40DlDxi0m
+                  stripe:
+                    subscription: sub_1K4sDHEBSGAEGWrHNIgRxddY
+                    subscription_item: si_KkMxT2vMgYddv6
+                    priceId: price_1J8nEbEBSGAEGWrHvjTEB1L4
+                    productId: prod_JmLwGBZbrM1h12
+                organization:
+                  id: 1
+                  name: Drafter Developers Inc.
+                  status: active
+                  ownerId: 1
+                refUrl: /refferals?rpro=drafter&rcode=null
